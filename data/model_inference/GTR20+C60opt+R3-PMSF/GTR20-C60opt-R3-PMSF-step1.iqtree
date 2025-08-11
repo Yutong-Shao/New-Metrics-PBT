@@ -1,0 +1,132 @@
+IQ-TREE 3.0.1 built May  5 2025
+
+Input file name: example/alignment.nex
+Type of analysis: tree reconstruction
+Random seed number: 362474
+
+REFERENCES
+----------
+
+To cite IQ-TREE 3 please use:
+
+Thomas K.F. Wong, Nhan Ly-Trong, Huaiyan Ren, Hector Banos, Andrew J. Roger,
+Edward Susko, Chris Bielow, Nicola De Maio, Nick Goldman, Matthew W. Hahn,
+Gavin Huttley, Robert Lanfear, Bui Quang Minh (2025)
+IQ-TREE 3: Phylogenomic Inference Software using Complex Evolutionary Models.
+Submitted.
+
+Please also cite the following paper(s) for the feature(s) that you used:
+
+Since you used site-specific frequency model please also cite: 
+
+Huai-Chun Wang, Edward Susko, Bui Quang Minh, and Andrew J. Roger (2018)
+Modeling site heterogeneity with posterior mean site frequency profiles
+accelerates accurate phylogenomic estimation. Syst. Biol., 67:216–235.
+https://doi.org/10.1093/sysbio/syx068
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 20 sequences with 1321 amino-acid sites
+Number of constant sites: 892 (= 67.5246% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 892 (= 67.5246% of all sites)
+Number of parsimony informative sites: 280
+Number of distinct site patterns: 429
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: GTRPMIX+SSF+F+R3
+
+State frequencies: (site specific frequencies)
+
+Model of rate heterogeneity: FreeRate with 3 categories
+Site proportion and rates:  (0.5035,0.0401) (0.3126,0.4282) (0.1839,4.5995)
+
+ Category  Relative_rate  Proportion
+  1         0.0401         0.5035
+  2         0.4282         0.3126
+  3         4.5995         0.1839
+
+STARTING TREE
+-------------
+
+Log-likelihood of the tree: -8319.2501 (s.e. 289.4604)
+Unconstrained log-likelihood (without tree): -5958.2344
+Number of free parameters (#branches + #model parameters): 56
+Akaike information criterion (AIC) score: 16750.5002
+Corrected Akaike information criterion (AICc) score: 16755.5509
+Bayesian information criterion (BIC) score: 17040.9243
+
+Total tree length (sum of branch lengths): 1.1981
+Sum of internal branch lengths: 0.3540 (29.5507% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Anabaena_cylindrica_PCC_7122' is drawn at root
+
++--Anabaena_cylindrica_PCC_7122
+|
+|                  +----Nostoc_sp_CENA543
+|               +--|
+|               |  |                 +----------Calothrix_rhizosoleniae_SC01
+|               |  |        +--------|
+|               |  |        |        +--------------------------Richelia_intracellularis_HH01
+|               |  |     +--|
+|               |  |     |  |  +--Chlorogloeopsis_fritschii_PCC_9212
+|               |  |     |  +--|
+|               |  |     |     +------Fischerella_sp_NIES_4106
+|               |  |  +--|
+|               |  |  |  +------Tolypothrix_bouteillei_VB521301
+|               |  +--|
+|               |     |  +-------Chroococcidiopsis_thermalis_PCC_7203
+|               |     +--|
+|               |        |  +----Peltula.bin.10
+|               |        +--|
+|               |           |  +---------Gloeocapsa_sp_PCC_7428
+|               |           +--|
+|               |              +----------------Synechocystis_sp_PCC_7509
+|            +--|
+|            |  +----Fortiea_contorta_PCC_7126
+|         +--|
+|         |  |  +--Calothrix_sp_NIES_2100
+|         |  +--|
+|         |     +--Tolypothrix_tenuis_PCC_7101
++---------|
+|         |  +--JL23bin6
+|         +--|
+|            +--Nostoc_sp_B_2019
+|
+|     +--Anabaena_sp_WA113
+|  +--|
+|  |  |  +--Dolichospermum_planctonicum_strain_NIES_80
+|  |  +--|
+|  |     +--Cuspidothrix_issatschenkoi_CHARLIE_1
++--|
+   +--Trichormus_variabilis_PCC_6309
+
+Tree in newick format:
+
+(Anabaena_cylindrica_PCC_7122:0.0070532931,((((Nostoc_sp_CENA543:0.0345862652,((((Calothrix_rhizosoleniae_SC01:0.0738464327,Richelia_intracellularis_HH01:0.1816872820):0.0620236656,(Chlorogloeopsis_fritschii_PCC_9212:0.0193506107,Fischerella_sp_NIES_4106:0.0486337284):0.0224957824):0.0106191342,Tolypothrix_bouteillei_VB521301:0.0507859815):0.0071460127,(Chroococcidiopsis_thermalis_PCC_7203:0.0595381404,(Peltula.bin.10:0.0363283113,(Gloeocapsa_sp_PCC_7428:0.0713114324,Synechocystis_sp_PCC_7509:0.1192016213):0.0249198216):0.0193909809):0.0212714963):0.0201015010):0.0240864524,Fortiea_contorta_PCC_7126:0.0392818516):0.0091162575,(Calothrix_sp_NIES_2100:0.0152768431,Tolypothrix_tenuis_PCC_7101:0.0123751535):0.0119172538):0.0142913928,(JL23bin6:0.0173345632,Nostoc_sp_B_2019:0.0071566471):0.0164148968):0.0725875784,((Anabaena_sp_WA113:0.0145160602,(Dolichospermum_planctonicum_strain_NIES_80:0.0047505669,Cuspidothrix_issatschenkoi_CHARLIE_1:0.0102579432):0.0020038452):0.0096392124,Trichormus_variabilis_PCC_6309:0.0207629649):0.0060147267);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t example/infer/GTR20-C60opt-R3-PMSF-step1.treefile -m "GTRPMIX+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0834974,0.0498864,0.0508327,0.0586298,0.00601817,0.0418622,0.074489,0.0639667,0.0168433,0.057835,0.10617,0.0506056,0.0289553,0.0327782,0.0527631,0.0637774,0.0450795,0.0118092,0.0376609,0.0665405}+R3{0.503481,0.0401133,0.312601,0.428244,0.183918,4.59952}" --length 1321
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s example/alignment.nex --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s example/alignment.nex --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Aug  8 15:15:29 2025
+Total CPU time used: 5.99156 seconds (0h:0m:5s)
+Total wall-clock time used: 0.266414 seconds (0h:0m:0s)
+

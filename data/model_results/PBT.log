@@ -1,0 +1,90 @@
+============================================================
+DATE AND TIME: Mon Aug 11 23:11:42 2025
+Starting parametric bootstrap test for model adequacy
+Simulated folder path: D:\8701\New-Metrics-PBT\data\model_simulation
+Original alignment path: D:\8701\August\alignment.fasta
+============================================================
+
+
+[STEP 1] Loading original alignment: D:\8701\August\alignment.fasta
+[MODEL] Adding gaps in: GTR20+C60fix+R3-PMSF
+[MODEL] Adding gaps in: GTR20+C60opt+R3-PMSF
+[MODEL] Adding gaps in: LG+C60+R3
+[MODEL] Adding gaps in: LG+C60fix+R3-PMSF
+[MODEL] Adding gaps in: LG+C60opt+R3-PMSF
+[MODEL] Adding gaps in: LG+R3
+
+[STEP 2] Computing entropy & diversity using 1 CPUs...
+
+[STEP 3a] Computing per-site entropy & diversity for original alignment
+
+[STEP 3b] Computing per-site metrics on 600 files using 1 CPUs...
+
+[STEP 4] Running CvM test comparing model sitewise metrics to original
+
+
+Model Adequacy Evaluation
+----------------------
+
+
+Best-fit model according to Mean Difference (entropy): GTR20+C60fix+R3-PMSF
+
+List of models sorted by |original - simulated| for entropy:
+
+Model                               Entropy original data     Average entropy simulated data SD simulated       Z-score    |Diff|    
+-------------------------------------------------------------------------------------------------------------------------------------
+
+GTR20+C60fix+R3-PMSF                0.271698                  0.263109                       0.014875           -0.577     0.008588  
+LG+C60fix+R3-PMSF                   0.271698                  0.280946                       0.014263           0.648      0.009248  
+GTR20+C60opt+R3-PMSF                0.271698                  0.281955                       0.014921           0.687      0.010257  
+LG+C60+R3                           0.271698                  0.286380                       0.015457           0.950      0.014683  
+LG+C60opt+R3-PMSF                   0.271698                  0.297347                       0.014455           1.774      0.025649  
+LG+R3                               0.271698                  0.316296                       0.016633           2.681      0.044598  
+
+
+Best-fit model according to Mean Difference (diversity): GTR20+C60fix+R3-PMSF
+
+List of models sorted by |original - simulated| for diversity:
+
+Model                               Diversity original data   Average diversity simulated data SD simulated       Z-score    |Diff|    
+---------------------------------------------------------------------------------------------------------------------------------------
+
+GTR20+C60fix+R3-PMSF                1.570780                  1.585178                       0.033710           0.427      0.014398  
+LG+C60+R3                           1.570780                  1.625852                       0.034537           1.595      0.055072  
+GTR20+C60opt+R3-PMSF                1.570780                  1.630886                       0.031961           1.881      0.060106  
+LG+C60fix+R3-PMSF                   1.570780                  1.634860                       0.031649           2.025      0.064080  
+LG+C60opt+R3-PMSF                   1.570780                  1.663232                       0.031478           2.937      0.092453  
+LG+R3                               1.570780                  1.750659                       0.038597           4.660      0.179879  
+
+
+Best-fit model according to Cvm Test (entropy): GTR20+C60opt+R3-PMSF
+
+List of models sorted by Cvm Test (entropy) W2_statistic:
+
+Model                                  W2_statistic
+GTR20+C60opt+R3-PMSF                       0.091675
+LG+C60+R3                                  0.103171
+LG+C60opt+R3-PMSF                          0.108712
+LG+R3                                      0.160509
+LG+C60fix+R3-PMSF                          0.248616
+GTR20+C60fix+R3-PMSF                       0.312979
+
+
+
+Best-fit model according to Cvm Test (diversity): LG+C60+R3
+
+List of models sorted by Cvm Test (diversity) W2_statistic:
+
+Model                                  W2_statistic
+LG+C60+R3                                  0.145312
+GTR20+C60opt+R3-PMSF                       0.160035
+LG+C60opt+R3-PMSF                          0.193818
+LG+C60fix+R3-PMSF                          0.324966
+GTR20+C60fix+R3-PMSF                       0.346597
+LG+R3                                      0.399596
+
+
+TIME STAMP
+----------
+Date and time: Mon Aug 11 23:12:07 2025
+Total wall-clock time used: 25.18507 seconds (0h:0m:25s)

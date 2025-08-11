@@ -1,0 +1,239 @@
+IQ-TREE 3.0.1 built May  5 2025
+
+Input file name: example/alignment.nex
+Type of analysis: tree reconstruction + ultrafast bootstrap (1000 replicates)
+Random seed number: 502609
+
+REFERENCES
+----------
+
+To cite IQ-TREE 3 please use:
+
+Thomas K.F. Wong, Nhan Ly-Trong, Huaiyan Ren, Hector Banos, Andrew J. Roger,
+Edward Susko, Chris Bielow, Nicola De Maio, Nick Goldman, Matthew W. Hahn,
+Gavin Huttley, Robert Lanfear, Bui Quang Minh (2025)
+IQ-TREE 3: Phylogenomic Inference Software using Complex Evolutionary Models.
+Submitted.
+
+Please also cite the following paper(s) for the feature(s) that you used:
+
+Since you used ultrafast bootstrap (UFBoot) please also cite: 
+
+Diep Thi Hoang, Olga Chernomor, Arndt von Haeseler, Bui Quang Minh,
+and Le Sy Vinh (2018) UFBoot2: Improving the ultrafast bootstrap
+approximation. Mol. Biol. Evol., 35:518–522.
+https://doi.org/10.1093/molbev/msx281
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 20 sequences with 1321 amino-acid sites
+Number of constant sites: 892 (= 67.5246% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 892 (= 67.5246% of all sites)
+Number of parsimony informative sites: 280
+Number of distinct site patterns: 429
+
+SUBSTITUTION PROCESS
+--------------------
+
+Mixture model of substitution: MIX{LG+FC60pi1,LG+FC60pi2,LG+FC60pi3,LG+FC60pi4,LG+FC60pi5,LG+FC60pi6,LG+FC60pi7,LG+FC60pi8,LG+FC60pi9,LG+FC60pi10,LG+FC60pi11,LG+FC60pi12,LG+FC60pi13,LG+FC60pi14,LG+FC60pi15,LG+FC60pi16,LG+FC60pi17,LG+FC60pi18,LG+FC60pi19,LG+FC60pi20,LG+FC60pi21,LG+FC60pi22,LG+FC60pi23,LG+FC60pi24,LG+FC60pi25,LG+FC60pi26,LG+FC60pi27,LG+FC60pi28,LG+FC60pi29,LG+FC60pi30,LG+FC60pi31,LG+FC60pi32,LG+FC60pi33,LG+FC60pi34,LG+FC60pi35,LG+FC60pi36,LG+FC60pi37,LG+FC60pi38,LG+FC60pi39,LG+FC60pi40,LG+FC60pi41,LG+FC60pi42,LG+FC60pi43,LG+FC60pi44,LG+FC60pi45,LG+FC60pi46,LG+FC60pi47,LG+FC60pi48,LG+FC60pi49,LG+FC60pi50,LG+FC60pi51,LG+FC60pi52,LG+FC60pi53,LG+FC60pi54,LG+FC60pi55,LG+FC60pi56,LG+FC60pi57,LG+FC60pi58,LG+FC60pi59,LG+FC60pi60}+R3
+
+  No  Component      Rate    Weight   Parameters
+   1  LG+FC60pi1    1.0000   0.0170   LG+FC60pi1
+   2  LG+FC60pi2    1.0000   0.0212   LG+FC60pi2
+   3  LG+FC60pi3    1.0000   0.0277   LG+FC60pi3
+   4  LG+FC60pi4    1.0000   0.0066   LG+FC60pi4
+   5  LG+FC60pi5    1.0000   0.0141   LG+FC60pi5
+   6  LG+FC60pi6    1.0000   0.0069   LG+FC60pi6
+   7  LG+FC60pi7    1.0000   0.0147   LG+FC60pi7
+   8  LG+FC60pi8    1.0000   0.0067   LG+FC60pi8
+   9  LG+FC60pi9    1.0000   0.0018   LG+FC60pi9
+  10  LG+FC60pi10   1.0000   0.0103   LG+FC60pi10
+  11  LG+FC60pi11   1.0000   0.0231   LG+FC60pi11
+  12  LG+FC60pi12   1.0000   0.0058   LG+FC60pi12
+  13  LG+FC60pi13   1.0000   0.0125   LG+FC60pi13
+  14  LG+FC60pi14   1.0000   0.0205   LG+FC60pi14
+  15  LG+FC60pi15   1.0000   0.0071   LG+FC60pi15
+  16  LG+FC60pi16   1.0000   0.0118   LG+FC60pi16
+  17  LG+FC60pi17   1.0000   0.0068   LG+FC60pi17
+  18  LG+FC60pi18   1.0000   0.0434   LG+FC60pi18
+  19  LG+FC60pi19   1.0000   0.0318   LG+FC60pi19
+  20  LG+FC60pi20   1.0000   0.0223   LG+FC60pi20
+  21  LG+FC60pi21   1.0000   0.0102   LG+FC60pi21
+  22  LG+FC60pi22   1.0000   0.0151   LG+FC60pi22
+  23  LG+FC60pi23   1.0000   0.0134   LG+FC60pi23
+  24  LG+FC60pi24   1.0000   0.0149   LG+FC60pi24
+  25  LG+FC60pi25   1.0000   0.0239   LG+FC60pi25
+  26  LG+FC60pi26   1.0000   0.0129   LG+FC60pi26
+  27  LG+FC60pi27   1.0000   0.0222   LG+FC60pi27
+  28  LG+FC60pi28   1.0000   0.0247   LG+FC60pi28
+  29  LG+FC60pi29   1.0000   0.0214   LG+FC60pi29
+  30  LG+FC60pi30   1.0000   0.0115   LG+FC60pi30
+  31  LG+FC60pi31   1.0000   0.0076   LG+FC60pi31
+  32  LG+FC60pi32   1.0000   0.0130   LG+FC60pi32
+  33  LG+FC60pi33   1.0000   0.0094   LG+FC60pi33
+  34  LG+FC60pi34   1.0000   0.0467   LG+FC60pi34
+  35  LG+FC60pi35   1.0000   0.0442   LG+FC60pi35
+  36  LG+FC60pi36   1.0000   0.0322   LG+FC60pi36
+  37  LG+FC60pi37   1.0000   0.0403   LG+FC60pi37
+  38  LG+FC60pi38   1.0000   0.0150   LG+FC60pi38
+  39  LG+FC60pi39   1.0000   0.0105   LG+FC60pi39
+  40  LG+FC60pi40   1.0000   0.0215   LG+FC60pi40
+  41  LG+FC60pi41   1.0000   0.0155   LG+FC60pi41
+  42  LG+FC60pi42   1.0000   0.0102   LG+FC60pi42
+  43  LG+FC60pi43   1.0000   0.0228   LG+FC60pi43
+  44  LG+FC60pi44   1.0000   0.0123   LG+FC60pi44
+  45  LG+FC60pi45   1.0000   0.0067   LG+FC60pi45
+  46  LG+FC60pi46   1.0000   0.0004   LG+FC60pi46
+  47  LG+FC60pi47   1.0000   0.0344   LG+FC60pi47
+  48  LG+FC60pi48   1.0000   0.0114   LG+FC60pi48
+  49  LG+FC60pi49   1.0000   0.0127   LG+FC60pi49
+  50  LG+FC60pi50   1.0000   0.0124   LG+FC60pi50
+  51  LG+FC60pi51   1.0000   0.0262   LG+FC60pi51
+  52  LG+FC60pi52   1.0000   0.0065   LG+FC60pi52
+  53  LG+FC60pi53   1.0000   0.0103   LG+FC60pi53
+  54  LG+FC60pi54   1.0000   0.0142   LG+FC60pi54
+  55  LG+FC60pi55   1.0000   0.0216   LG+FC60pi55
+  56  LG+FC60pi56   1.0000   0.0199   LG+FC60pi56
+  57  LG+FC60pi57   1.0000   0.0039   LG+FC60pi57
+  58  LG+FC60pi58   1.0000   0.0113   LG+FC60pi58
+  59  LG+FC60pi59   1.0000   0.0129   LG+FC60pi59
+  60  LG+FC60pi60   1.0000   0.0118   LG+FC60pi60
+
+Model of rate heterogeneity: FreeRate with 3 categories
+Site proportion and rates:  (0.7622,0.1144) (0.1782,2.4763) (0.0595,7.9200)
+
+ Category  Relative_rate  Proportion
+  1         0.1144         0.7622
+  2         2.4763         0.1782
+  3         7.9200         0.0595
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -10466.0987 (s.e. 309.5554)
+Unconstrained log-likelihood (without tree): -5958.2344
+Number of free parameters (#branches + #model parameters): 41
+Akaike information criterion (AIC) score: 21014.1974
+Corrected Akaike information criterion (AICc) score: 21016.8902
+Bayesian information criterion (BIC) score: 21226.8293
+
+Total tree length (sum of branch lengths): 1.3538
+Sum of internal branch lengths: 0.3974 (29.3575% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Anabaena_cylindrica_PCC_7122' is drawn at root
+Numbers in parentheses are  ultrafast bootstrap support (%)
+
++--Anabaena_cylindrica_PCC_7122
+|
+|                   +----Nostoc_sp_CENA543
+|                +--| (99)
+|                |  |             +-----------Calothrix_rhizosoleniae_SC01
+|                |  |     +-------| (100)
+|                |  |     |       +--------------------------Richelia_intracellularis_HH01
+|                |  |  +--| (88)
+|                |  |  |  |  +--Chlorogloeopsis_fritschii_PCC_9212
+|                |  |  |  +--| (99)
+|                |  |  |     +------Fischerella_sp_NIES_4106
+|                |  +--| (98)
+|                |     |  +------Tolypothrix_bouteillei_VB521301
+|                |     +--| (57)
+|                |        |  +-------Chroococcidiopsis_thermalis_PCC_7203
+|                |        +--| (100)
+|                |           |  +-----Peltula.bin.10
+|                |           +--| (97)
+|                |              |  +----------Gloeocapsa_sp_PCC_7428
+|                |              +--| (96)
+|                |                 +----------------Synechocystis_sp_PCC_7509
+|             +--| (81)
+|             |  +----Fortiea_contorta_PCC_7126
+|          +--| (84)
+|          |  |  +--Calothrix_sp_NIES_2100
+|          |  +--| (63)
+|          |     +--Tolypothrix_tenuis_PCC_7101
++----------| (100)
+|          |  +--JL23bin6
+|          +--| (95)
+|             +--Nostoc_sp_B_2019
+|
+|        +--Anabaena_sp_WA113
+|     +--| (79)
+|     |  +--Dolichospermum_planctonicum_strain_NIES_80
+|  +--| (97)
+|  |  +--Cuspidothrix_issatschenkoi_CHARLIE_1
++--| (92)
+   +--Trichormus_variabilis_PCC_6309
+
+Tree in newick format:
+
+(Anabaena_cylindrica_PCC_7122:0.0064111474,((((Nostoc_sp_CENA543:0.0408473105,(((Calothrix_rhizosoleniae_SC01:0.0890283728,Richelia_intracellularis_HH01:0.2059814001)100:0.0639878839,(Chlorogloeopsis_fritschii_PCC_9212:0.0226069818,Fischerella_sp_NIES_4106:0.0544934597)99:0.0271221346)88:0.0141690394,(Tolypothrix_bouteillei_VB521301:0.0587085438,(Chroococcidiopsis_thermalis_PCC_7203:0.0648849844,(Peltula.bin.10:0.0446462825,(Gloeocapsa_sp_PCC_7428:0.0836243865,Synechocystis_sp_PCC_7509:0.1289145304)96:0.0250170287)97:0.0221222972)100:0.0257571572)57:0.0059625831)98:0.0217248348)99:0.0268710499,Fortiea_contorta_PCC_7126:0.0441370677)81:0.0103179732,(Calothrix_sp_NIES_2100:0.0166796351,Tolypothrix_tenuis_PCC_7101:0.0143570570)63:0.0136501866)84:0.0166417891,(JL23bin6:0.0187635566,Nostoc_sp_B_2019:0.0079543788)95:0.0190457339)100:0.0822213958,(((Anabaena_sp_WA113:0.0169985504,Dolichospermum_planctonicum_strain_NIES_80:0.0043370936)79:0.0040297878,Cuspidothrix_issatschenkoi_CHARLIE_1:0.0089778474)97:0.0107865374,Trichormus_variabilis_PCC_6309:0.0240194606)92:0.0080197605);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Log-likelihood of consensus tree: -10466.098328
+Robinson-Foulds distance between ML tree and consensus tree: 0
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++--Anabaena_cylindrica_PCC_7122
+|
+|                   +----Nostoc_sp_CENA543
+|                +--| (99)
+|                |  |             +-----------Calothrix_rhizosoleniae_SC01
+|                |  |     +-------| (100)
+|                |  |     |       +--------------------------Richelia_intracellularis_HH01
+|                |  |  +--| (88)
+|                |  |  |  |  +--Chlorogloeopsis_fritschii_PCC_9212
+|                |  |  |  +--| (99)
+|                |  |  |     +------Fischerella_sp_NIES_4106
+|                |  +--| (98)
+|                |     |  +------Tolypothrix_bouteillei_VB521301
+|                |     +--| (57)
+|                |        |  +-------Chroococcidiopsis_thermalis_PCC_7203
+|                |        +--| (100)
+|                |           |  +-----Peltula.bin.10
+|                |           +--| (97)
+|                |              |  +----------Gloeocapsa_sp_PCC_7428
+|                |              +--| (96)
+|                |                 +----------------Synechocystis_sp_PCC_7509
+|             +--| (81)
+|             |  +----Fortiea_contorta_PCC_7126
+|          +--| (84)
+|          |  |  +--Calothrix_sp_NIES_2100
+|          |  +--| (63)
+|          |     +--Tolypothrix_tenuis_PCC_7101
++----------| (100)
+|          |  +--JL23bin6
+|          +--| (95)
+|             +--Nostoc_sp_B_2019
+|
+|        +--Anabaena_sp_WA113
+|     +--| (79)
+|     |  +--Dolichospermum_planctonicum_strain_NIES_80
+|  +--| (97)
+|  |  +--Cuspidothrix_issatschenkoi_CHARLIE_1
++--| (92)
+   +--Trichormus_variabilis_PCC_6309
+
+
+Consensus tree in newick format: 
+
+(Anabaena_cylindrica_PCC_7122:0.0064124912,((((Nostoc_sp_CENA543:0.0409239356,(((Calothrix_rhizosoleniae_SC01:0.0892927226,Richelia_intracellularis_HH01:0.2065077592)100:0.0640676215,(Chlorogloeopsis_fritschii_PCC_9212:0.0226446367,Fischerella_sp_NIES_4106:0.0546140262)99:0.0271742340)88:0.0141973693,(Tolypothrix_bouteillei_VB521301:0.0588682162,(Chroococcidiopsis_thermalis_PCC_7203:0.0650764509,(Peltula.bin.10:0.0447709473,(Gloeocapsa_sp_PCC_7428:0.0838961807,Synechocystis_sp_PCC_7509:0.1293248381)96:0.0250868356)97:0.0221644580)100:0.0258272316)57:0.0059775629)98:0.0217612390)99:0.0269237513,Fortiea_contorta_PCC_7126:0.0442182804)81:0.0103323636,(Calothrix_sp_NIES_2100:0.0166997701,Tolypothrix_tenuis_PCC_7101:0.0143876125)63:0.0136681165)84:0.0166649763,(JL23bin6:0.0187885620,Nostoc_sp_B_2019:0.0079705678)95:0.0190749696)100:0.0823725854,(((Anabaena_sp_WA113:0.0170236167,Dolichospermum_planctonicum_strain_NIES_80:0.0043429877)79:0.0040367497,Cuspidothrix_issatschenkoi_CHARLIE_1:0.0089886504)97:0.0108037347,Trichormus_variabilis_PCC_6309:0.0240575566)92:0.0080333676);
+
+ALISIM COMMAND
+--------------
+Currently, we only support exporting AliSim commands automatically from the analysis for common models of DNA, Protein, Binary, and Morphological data. To simulate data from other models (mixture, lie-markov, etc), please refer to the User Manual of AliSim. Thanks!
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Thu Aug  7 12:59:54 2025
+Total CPU time used: 24546.0131 seconds (6h:49m:6s)
+Total wall-clock time used: 497.2495582 seconds (0h:8m:17s)
+

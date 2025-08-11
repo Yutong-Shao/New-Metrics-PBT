@@ -1,0 +1,73 @@
+IQ-TREE version 3.0.1 for Linux x86 64-bit built May  5 2025
+Developed by Bui Quang Minh, Thomas Wong, Nhan Ly-Trong, Huaiyan Ren
+Contributed by Lam-Tung Nguyen, Dominik Schrempf, Chris Bielow,
+Olga Chernomor, Michael Woodhams, Diep Thi Hoang, Heiko Schmidt
+
+Host:    rona.rsb.anu.edu.au (AVX2, FMA3, 1007 GB RAM)
+Command: ./iqtree3 -s example/alignment.nex -m LG+C60+R3 -te example/infer/LG-C60-R3.contree -me 0.99 -safe -mwopt -pre example/infer/LG-C60opt-R3-PMSF-step0 -prec 10 -T 50
+Seed:    304974 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Thu Aug  7 13:06:05 2025
+Kernel:  Safe AVX+FMA - 50 threads (256 CPU cores detected)
+
+Reading alignment file example/alignment.nex ... Nexus format detected
+Skipping unknown block (sets)...
+Alignment has 20 sequences with 1321 columns, 429 distinct patterns
+280 parsimony-informative, 149 singleton sites, 892 constant sites
+                                            Gap/Ambiguity  Composition  p-value
+Analyzing sequences: done in 7.24401e-05 secs using 91.11% CPU
+   1  Anabaena_cylindrica_PCC_7122                  0.00%    passed    100.00%
+   2  Nostoc_sp_CENA543                             0.00%    passed    100.00%
+   3  Calothrix_rhizosoleniae_SC01                  0.00%    passed     99.99%
+   4  Richelia_intracellularis_HH01                 0.00%    passed     99.01%
+   5  Chlorogloeopsis_fritschii_PCC_9212            0.00%    passed    100.00%
+   6  Fischerella_sp_NIES_4106                      0.00%    passed    100.00%
+   7  Tolypothrix_bouteillei_VB521301               0.00%    passed    100.00%
+   8  Chroococcidiopsis_thermalis_PCC_7203          0.00%    passed     99.99%
+   9  Peltula.bin.10                                0.00%    passed    100.00%
+  10  Gloeocapsa_sp_PCC_7428                        0.00%    passed     99.99%
+  11  Synechocystis_sp_PCC_7509                     0.00%    passed    100.00%
+  12  Calothrix_sp_NIES_2100                        0.00%    passed    100.00%
+  13  Tolypothrix_tenuis_PCC_7101                   0.00%    passed    100.00%
+  14  Fortiea_contorta_PCC_7126                     0.00%    passed    100.00%
+  15  JL23bin6                                      0.00%    passed    100.00%
+  16  Nostoc_sp_B_2019                              0.00%    passed    100.00%
+  17  Anabaena_sp_WA113                             0.00%    passed    100.00%
+  18  Dolichospermum_planctonicum_strain_NIES_80    0.00%    passed    100.00%
+  19  Cuspidothrix_issatschenkoi_CHARLIE_1          0.00%    passed    100.00%
+  20  Trichormus_variabilis_PCC_6309                0.00%    passed    100.00%
+****  TOTAL                                         0.00%  0 sequences failed composition chi2 test (p-value<5%; df=19)
+Checking for duplicate sequences: done in 0.000142073 secs using 504.7% CPU
+Reading input tree file example/infer/LG-C60-R3.contree ...
+Model LG+C60+R3 is alias for LG+POISSON+G+FMIX{C60pi1:1:0.0169698865,C60pi2:1:0.0211683374,C60pi3:1:0.0276589079,C60pi4:1:0.0065675964,C60pi5:1:0.0141221416,C60pi6:1:0.0068774834,C60pi7:1:0.0146909701,C60pi8:1:0.0067225777,C60pi9:1:0.0018396660,C60pi10:1:0.0102547197,C60pi11:1:0.0230896163,C60pi12:1:0.0057941033,C60pi13:1:0.0125394534,C60pi14:1:0.0204526478,C60pi15:1:0.0070629602,C60pi16:1:0.0117982741,C60pi17:1:0.0068334668,C60pi18:1:0.0433775839,C60pi19:1:0.0318278731,C60pi20:1:0.0222546108,C60pi21:1:0.0102264969,C60pi22:1:0.0150545891,C60pi23:1:0.0134159878,C60pi24:1:0.0148552065,C60pi25:1:0.0239111516,C60pi26:1:0.0128776278,C60pi27:1:0.0222318842,C60pi28:1:0.0247444742,C60pi29:1:0.0214274810,C60pi30:1:0.0115001882,C60pi31:1:0.0076017389,C60pi32:1:0.0130258568,C60pi33:1:0.0093701965,C60pi34:1:0.0467194264,C60pi35:1:0.0441940314,C60pi36:1:0.0322263154,C60pi37:1:0.0402999891,C60pi38:1:0.0150234227,C60pi39:1:0.0104589903,C60pi40:1:0.0214742395,C60pi41:1:0.0154957836,C60pi42:1:0.0101789953,C60pi43:1:0.0227980379,C60pi44:1:0.0123204539,C60pi45:1:0.0066777583,C60pi46:1:0.0004150083,C60pi47:1:0.0344385130,C60pi48:1:0.0113663379,C60pi49:1:0.0127143049,C60pi50:1:0.0124323741,C60pi51:1:0.0262124415,C60pi52:1:0.0064994957,C60pi53:1:0.0103203293,C60pi54:1:0.0142463512,C60pi55:1:0.0215600067,C60pi56:1:0.0199150700,C60pi57:1:0.0038964200,C60pi58:1:0.0113448855,C60pi59:1:0.0128595846,C60pi60:1:0.0117656776}+R3
+WARNING: Your input class weight 0.000415008 is very small and may cause numerical issues
+WARNING: Both Gamma and FreeRate models were specified, continue with FreeRate model
+
+NOTE: 252 MB RAM (0 GB) is required!
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+Estimate model parameters (epsilon = 0.990)
+1. Initial log-likelihood: -10768.983
+2. Current log-likelihood: -10455.068
+3. Current log-likelihood: -10437.388
+4. Current log-likelihood: -10433.935
+5. Current log-likelihood: -10432.706
+Optimal log-likelihood: -10431.789
+Mixture weights: 0.000 0.040 0.010 0.000 0.000 0.001 0.000 0.000 0.000 0.000 0.043 0.036 0.000 0.019 0.000 0.000 0.018 0.046 0.000 0.034 0.008 0.000 0.000 0.009 0.016 0.000 0.028 0.000 0.000 0.065 0.039 0.017 0.028 0.057 0.075 0.027 0.027 0.027 0.009 0.023 0.000 0.012 0.018 0.046 0.010 0.000 0.051 0.016 0.031 0.000 0.052 0.000 0.003 0.000 0.001 0.028 0.009 0.000 0.014 0.007
+Site proportion and rates:  (0.518,0.031) (0.314,0.519) (0.168,4.884)
+Parameters optimization took 5 rounds (9.816 sec)
+WARNING: The mixture model might be overfitting because some mixture weights are estimated close to zero
+Wrote distance file to... 
+BEST SCORE FOUND : -10431.789
+Total tree length: 1.318
+
+Total number of iterations: 0
+CPU time used for tree search: 0.000 sec (0h:0m:0s)
+Wall-clock time used for tree search: 0.000 sec (0h:0m:0s)
+Total CPU time used: 485.571 sec (0h:8m:5s)
+Total wall-clock time used: 9.888 sec (0h:0m:9s)
+
+Analysis results written to: 
+  IQ-TREE report:                example/infer/LG-C60opt-R3-PMSF-step0.iqtree
+  Maximum-likelihood tree:       example/infer/LG-C60opt-R3-PMSF-step0.treefile
+  Screen log file:               example/infer/LG-C60opt-R3-PMSF-step0.log
+
+Date and Time: Thu Aug  7 13:06:15 2025

@@ -1,0 +1,162 @@
+IQ-TREE version 3.0.1 for Linux x86 64-bit built May  5 2025
+Developed by Bui Quang Minh, Thomas Wong, Nhan Ly-Trong, Huaiyan Ren
+Contributed by Lam-Tung Nguyen, Dominik Schrempf, Chris Bielow,
+Olga Chernomor, Michael Woodhams, Diep Thi Hoang, Heiko Schmidt
+
+Host:    rona.rsb.anu.edu.au (AVX2, FMA3, 1007 GB RAM)
+Command: ./iqtree3 -s example/alignment.nex -m GTR20+R3 -te example/infer/LG-C60-R3.treefile --model-joint GTR20+FO --init-exchange LG -pre example/infer/GTR20 -T 50 -redo
+Seed:    526835 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Fri Aug  8 14:40:56 2025
+Kernel:  AVX+FMA - 50 threads (256 CPU cores detected)
+
+Reading alignment file example/alignment.nex ... Nexus format detected
+Skipping unknown block (sets)...
+Alignment has 20 sequences with 1321 columns, 429 distinct patterns
+280 parsimony-informative, 149 singleton sites, 892 constant sites
+                                            Gap/Ambiguity  Composition  p-value
+Analyzing sequences: done in 6.2855e-05 secs using 92.28% CPU
+   1  Anabaena_cylindrica_PCC_7122                  0.00%    passed    100.00%
+   2  Nostoc_sp_CENA543                             0.00%    passed    100.00%
+   3  Calothrix_rhizosoleniae_SC01                  0.00%    passed     99.99%
+   4  Richelia_intracellularis_HH01                 0.00%    passed     99.01%
+   5  Chlorogloeopsis_fritschii_PCC_9212            0.00%    passed    100.00%
+   6  Fischerella_sp_NIES_4106                      0.00%    passed    100.00%
+   7  Tolypothrix_bouteillei_VB521301               0.00%    passed    100.00%
+   8  Chroococcidiopsis_thermalis_PCC_7203          0.00%    passed     99.99%
+   9  Peltula.bin.10                                0.00%    passed    100.00%
+  10  Gloeocapsa_sp_PCC_7428                        0.00%    passed     99.99%
+  11  Synechocystis_sp_PCC_7509                     0.00%    passed    100.00%
+  12  Calothrix_sp_NIES_2100                        0.00%    passed    100.00%
+  13  Tolypothrix_tenuis_PCC_7101                   0.00%    passed    100.00%
+  14  Fortiea_contorta_PCC_7126                     0.00%    passed    100.00%
+  15  JL23bin6                                      0.00%    passed    100.00%
+  16  Nostoc_sp_B_2019                              0.00%    passed    100.00%
+  17  Anabaena_sp_WA113                             0.00%    passed    100.00%
+  18  Dolichospermum_planctonicum_strain_NIES_80    0.00%    passed    100.00%
+  19  Cuspidothrix_issatschenkoi_CHARLIE_1          0.00%    passed    100.00%
+  20  Trichormus_variabilis_PCC_6309                0.00%    passed    100.00%
+****  TOTAL                                         0.00%  0 sequences failed composition chi2 test (p-value<5%; df=19)
+Checking for duplicate sequences: done in 7.3757e-05 secs using 92.19% CPU
+Reading input tree file example/infer/LG-C60-R3.treefile ...
+
+NOTE: 4 MB RAM (0 GB) is required!
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -10989.255
+2. Current log-likelihood: -10591.554
+3. Current log-likelihood: -10536.361
+4. Current log-likelihood: -10519.661
+5. Current log-likelihood: -10513.810
+6. Current log-likelihood: -10509.657
+7. Current log-likelihood: -10507.220
+8. Current log-likelihood: -10505.665
+9. Current log-likelihood: -10504.383
+10. Current log-likelihood: -10503.259
+11. Current log-likelihood: -10502.022
+12. Current log-likelihood: -10501.473
+13. Current log-likelihood: -10500.782
+14. Current log-likelihood: -10500.412
+15. Current log-likelihood: -10500.024
+16. Current log-likelihood: -10499.572
+17. Current log-likelihood: -10499.281
+18. Current log-likelihood: -10498.964
+19. Current log-likelihood: -10498.619
+20. Current log-likelihood: -10498.213
+21. Current log-likelihood: -10497.726
+22. Current log-likelihood: -10497.539
+23. Current log-likelihood: -10497.290
+24. Current log-likelihood: -10496.799
+25. Current log-likelihood: -10496.470
+26. Current log-likelihood: -10496.045
+27. Current log-likelihood: -10495.781
+28. Current log-likelihood: -10495.219
+29. Current log-likelihood: -10494.624
+30. Current log-likelihood: -10494.285
+31. Current log-likelihood: -10494.021
+32. Current log-likelihood: -10493.651
+33. Current log-likelihood: -10493.368
+34. Current log-likelihood: -10493.119
+35. Current log-likelihood: -10492.872
+36. Current log-likelihood: -10492.616
+37. Current log-likelihood: -10492.334
+38. Current log-likelihood: -10491.934
+39. Current log-likelihood: -10491.635
+40. Current log-likelihood: -10491.274
+41. Current log-likelihood: -10490.829
+42. Current log-likelihood: -10490.324
+43. Current log-likelihood: -10489.804
+44. Current log-likelihood: -10489.256
+45. Current log-likelihood: -10488.516
+46. Current log-likelihood: -10487.905
+47. Current log-likelihood: -10487.250
+48. Current log-likelihood: -10486.637
+49. Current log-likelihood: -10485.963
+50. Current log-likelihood: -10485.396
+51. Current log-likelihood: -10484.866
+52. Current log-likelihood: -10484.347
+53. Current log-likelihood: -10483.882
+54. Current log-likelihood: -10483.468
+55. Current log-likelihood: -10483.025
+56. Current log-likelihood: -10482.571
+57. Current log-likelihood: -10482.191
+58. Current log-likelihood: -10481.893
+59. Current log-likelihood: -10481.623
+60. Current log-likelihood: -10481.310
+61. Current log-likelihood: -10480.968
+62. Current log-likelihood: -10480.644
+63. Current log-likelihood: -10480.374
+64. Current log-likelihood: -10480.120
+65. Current log-likelihood: -10479.974
+66. Current log-likelihood: -10479.827
+67. Current log-likelihood: -10479.554
+68. Current log-likelihood: -10479.455
+69. Current log-likelihood: -10479.268
+70. Current log-likelihood: -10479.071
+71. Current log-likelihood: -10478.982
+72. Current log-likelihood: -10478.880
+73. Current log-likelihood: -10478.797
+74. Current log-likelihood: -10478.718
+75. Current log-likelihood: -10478.636
+76. Current log-likelihood: -10478.592
+77. Current log-likelihood: -10478.537
+78. Current log-likelihood: -10478.479
+79. Current log-likelihood: -10478.401
+80. Current log-likelihood: -10478.376
+81. Current log-likelihood: -10478.306
+82. Current log-likelihood: -10478.267
+83. Current log-likelihood: -10478.232
+84. Current log-likelihood: -10478.211
+85. Current log-likelihood: -10478.138
+86. Current log-likelihood: -10478.061
+87. Current log-likelihood: -10478.036
+88. Current log-likelihood: -10477.991
+89. Current log-likelihood: -10477.929
+90. Current log-likelihood: -10477.917
+91. Current log-likelihood: -10477.896
+92. Current log-likelihood: -10477.860
+93. Current log-likelihood: -10477.792
+94. Current log-likelihood: -10477.755
+95. Current log-likelihood: -10477.660
+96. Current log-likelihood: -10477.626
+97. Current log-likelihood: -10477.575
+98. Current log-likelihood: -10477.546
+99. Current log-likelihood: -10477.513
+Optimal log-likelihood: -10477.513
+Site proportion and rates:  (0.764,0.137) (0.211,3.127) (0.025,9.558)
+Parameters optimization took 99 rounds (351.282 sec)
+Wrote distance file to... 
+BEST SCORE FOUND : -10477.513
+Total tree length: 1.128
+
+Total number of iterations: 0
+CPU time used for tree search: 0.000 sec (0h:0m:0s)
+Wall-clock time used for tree search: 0.000 sec (0h:0m:0s)
+Total CPU time used: 17538.559 sec (4h:52m:18s)
+Total wall-clock time used: 351.326 sec (0h:5m:51s)
+
+Analysis results written to: 
+  IQ-TREE report:                example/infer/GTR20.iqtree
+  Maximum-likelihood tree:       example/infer/GTR20.treefile
+  Screen log file:               example/infer/GTR20.log
+
+Date and Time: Fri Aug  8 14:46:47 2025

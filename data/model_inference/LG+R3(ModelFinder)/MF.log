@@ -1,0 +1,107 @@
+IQ-TREE version 3.0.1 for Linux x86 64-bit built May  5 2025
+Developed by Bui Quang Minh, Thomas Wong, Nhan Ly-Trong, Huaiyan Ren
+Contributed by Lam-Tung Nguyen, Dominik Schrempf, Chris Bielow,
+Olga Chernomor, Michael Woodhams, Diep Thi Hoang, Heiko Schmidt
+
+Host:    rona.rsb.anu.edu.au (AVX2, FMA3, 1007 GB RAM)
+Command: ./iqtree3 -s example/alignment.nex -m MF -mset LG -pre example/infer/MF -T 10
+Seed:    521484 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Thu Aug  7 12:25:44 2025
+Kernel:  AVX+FMA - 10 threads (256 CPU cores detected)
+
+Reading alignment file example/alignment.nex ... Nexus format detected
+Skipping unknown block (sets)...
+Alignment has 20 sequences with 1321 columns, 429 distinct patterns
+280 parsimony-informative, 149 singleton sites, 892 constant sites
+                                            Gap/Ambiguity  Composition  p-value
+Analyzing sequences: done in 3.62694e-05 secs using 93.74% CPU
+   1  Anabaena_cylindrica_PCC_7122                  0.00%    passed    100.00%
+   2  Nostoc_sp_CENA543                             0.00%    passed    100.00%
+   3  Calothrix_rhizosoleniae_SC01                  0.00%    passed     99.99%
+   4  Richelia_intracellularis_HH01                 0.00%    passed     99.01%
+   5  Chlorogloeopsis_fritschii_PCC_9212            0.00%    passed    100.00%
+   6  Fischerella_sp_NIES_4106                      0.00%    passed    100.00%
+   7  Tolypothrix_bouteillei_VB521301               0.00%    passed    100.00%
+   8  Chroococcidiopsis_thermalis_PCC_7203          0.00%    passed     99.99%
+   9  Peltula.bin.10                                0.00%    passed    100.00%
+  10  Gloeocapsa_sp_PCC_7428                        0.00%    passed     99.99%
+  11  Synechocystis_sp_PCC_7509                     0.00%    passed    100.00%
+  12  Calothrix_sp_NIES_2100                        0.00%    passed    100.00%
+  13  Tolypothrix_tenuis_PCC_7101                   0.00%    passed    100.00%
+  14  Fortiea_contorta_PCC_7126                     0.00%    passed    100.00%
+  15  JL23bin6                                      0.00%    passed    100.00%
+  16  Nostoc_sp_B_2019                              0.00%    passed    100.00%
+  17  Anabaena_sp_WA113                             0.00%    passed    100.00%
+  18  Dolichospermum_planctonicum_strain_NIES_80    0.00%    passed    100.00%
+  19  Cuspidothrix_issatschenkoi_CHARLIE_1          0.00%    passed    100.00%
+  20  Trichormus_variabilis_PCC_6309                0.00%    passed    100.00%
+****  TOTAL                                         0.00%  0 sequences failed composition chi2 test (p-value<5%; df=19)
+Checking for duplicate sequences: done in 7.26897e-05 secs using 90.8% CPU
+
+
+Create initial parsimony tree by phylogenetic likelihood library (PLL)... 0.004 seconds
+Perform fast likelihood tree search using LG+I+G model...
+Estimate model parameters (epsilon = 5.000)
+Perform nearest neighbor interchange...
+Optimizing NNI: done in 0.0610817 secs using 1042% CPU
+Estimate model parameters (epsilon = 1.000)
+1. Initial log-likelihood: -10734.937
+Optimal log-likelihood: -10734.879
+Proportion of invariable sites: 0.358
+Gamma shape alpha: 0.449
+Parameters optimization took 1 rounds (0.029 sec)
+Time for fast ML tree search: 0.157 seconds
+
+NOTE: ModelFinder requires 13 MB RAM!
+ModelFinder will test up to 44 protein models (sample size: 1321 epsilon: 0.100) ...
+ No. Model         -LnL         df  AIC          AICc         BIC
+  1  LG            11456.225    37  22986.450    22988.642    23178.337
+  2  LG+I          10861.294    38  21798.589    21800.901    21995.662
+  3  LG+G4         10749.033    38  21574.065    21576.377    21771.139
+  4  LG+I+G4       10734.821    39  21547.643    21550.078    21749.902
+  5  LG+R2         10741.463    39  21560.926    21563.362    21763.186
+  6  LG+R3         10724.807    41  21531.615    21534.308    21744.247
+  7  LG+R4         10724.837    43  21535.674    21538.637    21758.678
+ 14  LG+I+R2       10736.681    40  21553.363    21555.925    21760.809
+ 15  LG+I+R3       10725.333    42  21534.667    21537.493    21752.485
+ 16  LG+I+R4       10725.106    44  21538.211    21541.315    21766.402
+ 26  LG+F+I+G4     10713.751    58  21543.503    21548.926    21844.299
+ 28  LG+F+R3       10703.493    60  21526.985    21532.795    21838.154
+ 37  LG+F+I+R3     10704.133    61  21530.266    21536.274    21846.621
+Akaike Information Criterion:           LG+F+R3
+Corrected Akaike Information Criterion: LG+F+R3
+Bayesian Information Criterion:         LG+R3
+Best-fit model: LG+R3 chosen according to BIC
+
+All model information printed to example/infer/MF.model.gz
+CPU time for ModelFinder: 33.518 seconds (0h:0m:33s)
+Wall-clock time for ModelFinder: 3.359 seconds (0h:0m:3s)
+
+NOTE: 4 MB RAM (0 GB) is required!
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -10724.723
+2. Current log-likelihood: -10724.634
+3. Current log-likelihood: -10724.605
+4. Current log-likelihood: -10724.583
+5. Current log-likelihood: -10724.566
+6. Current log-likelihood: -10724.552
+7. Current log-likelihood: -10724.542
+Optimal log-likelihood: -10724.532
+Site proportion and rates:  (0.761,0.135) (0.177,2.663) (0.062,6.898)
+Parameters optimization took 7 rounds (0.245 sec)
+Wrote distance file to... 
+BEST SCORE FOUND : -10724.532
+Total tree length: 1.094
+
+Total number of iterations: 0
+CPU time used for tree search: 0.000 sec (0h:0m:0s)
+Wall-clock time used for tree search: 0.000 sec (0h:0m:0s)
+Total CPU time used: 36.031 sec (0h:0m:36s)
+Total wall-clock time used: 3.622 sec (0h:0m:3s)
+
+Analysis results written to: 
+  IQ-TREE report:                example/infer/MF.iqtree
+  Tree used for ModelFinder:     example/infer/MF.treefile
+  Screen log file:               example/infer/MF.log
+
+Date and Time: Thu Aug  7 12:25:48 2025

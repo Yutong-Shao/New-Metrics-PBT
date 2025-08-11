@@ -1,0 +1,183 @@
+IQ-TREE 3.0.1 built May  5 2025
+
+Input file name: example/alignment.nex
+User tree file name: example/infer/LG-C60-R3.contree
+Type of analysis: tree reconstruction
+Random seed number: 46738
+
+REFERENCES
+----------
+
+To cite IQ-TREE 3 please use:
+
+Thomas K.F. Wong, Nhan Ly-Trong, Huaiyan Ren, Hector Banos, Andrew J. Roger,
+Edward Susko, Chris Bielow, Nicola De Maio, Nick Goldman, Matthew W. Hahn,
+Gavin Huttley, Robert Lanfear, Bui Quang Minh (2025)
+IQ-TREE 3: Phylogenomic Inference Software using Complex Evolutionary Models.
+Submitted.
+
+Please also cite the following paper(s) for the feature(s) that you used:
+
+To cite MixtureFinder please use: 
+
+Huaiyan Ren, Thomas KF Wong, Bui Quang Minh, Robert Lanfear (2025)
+MixtureFinder: Estimating DNA Mixture Models for Phylogenetic Analyses.
+Molecular Biology and Evolution, 42:msae264.
+https://doi.org/10.1093/molbev/msae264
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 20 sequences with 1321 amino-acid sites
+Number of constant sites: 892 (= 67.5246% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 892 (= 67.5246% of all sites)
+Number of parsimony informative sites: 280
+Number of distinct site patterns: 429
+
+SUBSTITUTION PROCESS
+--------------------
+
+Mixture model of substitution: MIX{GTRPMIX+FC60pi1,GTRPMIX+FC60pi2,GTRPMIX+FC60pi3,GTRPMIX+FC60pi4,GTRPMIX+FC60pi5,GTRPMIX+FC60pi6,GTRPMIX+FC60pi7,GTRPMIX+FC60pi8,GTRPMIX+FC60pi9,GTRPMIX+FC60pi10,GTRPMIX+FC60pi11,GTRPMIX+FC60pi12,GTRPMIX+FC60pi13,GTRPMIX+FC60pi14,GTRPMIX+FC60pi15,GTRPMIX+FC60pi16,GTRPMIX+FC60pi17,GTRPMIX+FC60pi18,GTRPMIX+FC60pi19,GTRPMIX+FC60pi20,GTRPMIX+FC60pi21,GTRPMIX+FC60pi22,GTRPMIX+FC60pi23,GTRPMIX+FC60pi24,GTRPMIX+FC60pi25,GTRPMIX+FC60pi26,GTRPMIX+FC60pi27,GTRPMIX+FC60pi28,GTRPMIX+FC60pi29,GTRPMIX+FC60pi30,GTRPMIX+FC60pi31,GTRPMIX+FC60pi32,GTRPMIX+FC60pi33,GTRPMIX+FC60pi34,GTRPMIX+FC60pi35,GTRPMIX+FC60pi36,GTRPMIX+FC60pi37,GTRPMIX+FC60pi38,GTRPMIX+FC60pi39,GTRPMIX+FC60pi40,GTRPMIX+FC60pi41,GTRPMIX+FC60pi42,GTRPMIX+FC60pi43,GTRPMIX+FC60pi44,GTRPMIX+FC60pi45,GTRPMIX+FC60pi46,GTRPMIX+FC60pi47,GTRPMIX+FC60pi48,GTRPMIX+FC60pi49,GTRPMIX+FC60pi50,GTRPMIX+FC60pi51,GTRPMIX+FC60pi52,GTRPMIX+FC60pi53,GTRPMIX+FC60pi54,GTRPMIX+FC60pi55,GTRPMIX+FC60pi56,GTRPMIX+FC60pi57,GTRPMIX+FC60pi58,GTRPMIX+FC60pi59,GTRPMIX+FC60pi60}+R3
+
+  No  Component      Rate    Weight   Parameters
+   1  GTRPMIX+FC60pi1  1.0000000000  0.0000048663  GTRPMIX+FC60pi1
+   2  GTRPMIX+FC60pi2  1.0000000000  0.0209890748  GTRPMIX+FC60pi2
+   3  GTRPMIX+FC60pi3  1.0000000000  0.0102893646  GTRPMIX+FC60pi3
+   4  GTRPMIX+FC60pi4  1.0000000000  0.0000048663  GTRPMIX+FC60pi4
+   5  GTRPMIX+FC60pi5  1.0000000000  0.0000048663  GTRPMIX+FC60pi5
+   6  GTRPMIX+FC60pi6  1.0000000000  0.0000048663  GTRPMIX+FC60pi6
+   7  GTRPMIX+FC60pi7  1.0000000000  0.0000048663  GTRPMIX+FC60pi7
+   8  GTRPMIX+FC60pi8  1.0000000000  0.0000048663  GTRPMIX+FC60pi8
+   9  GTRPMIX+FC60pi9  1.0000000000  0.0011790117  GTRPMIX+FC60pi9
+  10  GTRPMIX+FC60pi10  1.0000000000  0.0000048663  GTRPMIX+FC60pi10
+  11  GTRPMIX+FC60pi11  1.0000000000  0.0062226564  GTRPMIX+FC60pi11
+  12  GTRPMIX+FC60pi12  1.0000000000  0.0439348676  GTRPMIX+FC60pi12
+  13  GTRPMIX+FC60pi13  1.0000000000  0.0000048663  GTRPMIX+FC60pi13
+  14  GTRPMIX+FC60pi14  1.0000000000  0.0350879092  GTRPMIX+FC60pi14
+  15  GTRPMIX+FC60pi15  1.0000000000  0.0000048663  GTRPMIX+FC60pi15
+  16  GTRPMIX+FC60pi16  1.0000000000  0.0000048663  GTRPMIX+FC60pi16
+  17  GTRPMIX+FC60pi17  1.0000000000  0.0360375490  GTRPMIX+FC60pi17
+  18  GTRPMIX+FC60pi18  1.0000000000  0.0509637785  GTRPMIX+FC60pi18
+  19  GTRPMIX+FC60pi19  1.0000000000  0.0000048663  GTRPMIX+FC60pi19
+  20  GTRPMIX+FC60pi20  1.0000000000  0.0406813082  GTRPMIX+FC60pi20
+  21  GTRPMIX+FC60pi21  1.0000000000  0.0050222730  GTRPMIX+FC60pi21
+  22  GTRPMIX+FC60pi22  1.0000000000  0.0000048663  GTRPMIX+FC60pi22
+  23  GTRPMIX+FC60pi23  1.0000000000  0.0000048663  GTRPMIX+FC60pi23
+  24  GTRPMIX+FC60pi24  1.0000000000  0.0000048663  GTRPMIX+FC60pi24
+  25  GTRPMIX+FC60pi25  1.0000000000  0.0145326346  GTRPMIX+FC60pi25
+  26  GTRPMIX+FC60pi26  1.0000000000  0.0000048663  GTRPMIX+FC60pi26
+  27  GTRPMIX+FC60pi27  1.0000000000  0.0347774926  GTRPMIX+FC60pi27
+  28  GTRPMIX+FC60pi28  1.0000000000  0.0000048663  GTRPMIX+FC60pi28
+  29  GTRPMIX+FC60pi29  1.0000000000  0.0000048663  GTRPMIX+FC60pi29
+  30  GTRPMIX+FC60pi30  1.0000000000  0.0944429355  GTRPMIX+FC60pi30
+  31  GTRPMIX+FC60pi31  1.0000000000  0.0295796670  GTRPMIX+FC60pi31
+  32  GTRPMIX+FC60pi32  1.0000000000  0.0158103171  GTRPMIX+FC60pi32
+  33  GTRPMIX+FC60pi33  1.0000000000  0.0595247400  GTRPMIX+FC60pi33
+  34  GTRPMIX+FC60pi34  1.0000000000  0.0435088250  GTRPMIX+FC60pi34
+  35  GTRPMIX+FC60pi35  1.0000000000  0.0611544207  GTRPMIX+FC60pi35
+  36  GTRPMIX+FC60pi36  1.0000000000  0.0252468589  GTRPMIX+FC60pi36
+  37  GTRPMIX+FC60pi37  1.0000000000  0.0134315403  GTRPMIX+FC60pi37
+  38  GTRPMIX+FC60pi38  1.0000000000  0.0423553172  GTRPMIX+FC60pi38
+  39  GTRPMIX+FC60pi39  1.0000000000  0.0072267425  GTRPMIX+FC60pi39
+  40  GTRPMIX+FC60pi40  1.0000000000  0.0005388459  GTRPMIX+FC60pi40
+  41  GTRPMIX+FC60pi41  1.0000000000  0.0000048663  GTRPMIX+FC60pi41
+  42  GTRPMIX+FC60pi42  1.0000000000  0.0009560547  GTRPMIX+FC60pi42
+  43  GTRPMIX+FC60pi43  1.0000000000  0.0137904196  GTRPMIX+FC60pi43
+  44  GTRPMIX+FC60pi44  1.0000000000  0.0017286792  GTRPMIX+FC60pi44
+  45  GTRPMIX+FC60pi45  1.0000000000  0.0214064967  GTRPMIX+FC60pi45
+  46  GTRPMIX+FC60pi46  1.0000000000  0.0071349957  GTRPMIX+FC60pi46
+  47  GTRPMIX+FC60pi47  1.0000000000  0.0465579079  GTRPMIX+FC60pi47
+  48  GTRPMIX+FC60pi48  1.0000000000  0.0310014109  GTRPMIX+FC60pi48
+  49  GTRPMIX+FC60pi49  1.0000000000  0.0041295663  GTRPMIX+FC60pi49
+  50  GTRPMIX+FC60pi50  1.0000000000  0.0146019064  GTRPMIX+FC60pi50
+  51  GTRPMIX+FC60pi51  1.0000000000  0.0475128581  GTRPMIX+FC60pi51
+  52  GTRPMIX+FC60pi52  1.0000000000  0.0000048663  GTRPMIX+FC60pi52
+  53  GTRPMIX+FC60pi53  1.0000000000  0.0033839110  GTRPMIX+FC60pi53
+  54  GTRPMIX+FC60pi54  1.0000000000  0.0000048663  GTRPMIX+FC60pi54
+  55  GTRPMIX+FC60pi55  1.0000000000  0.0361851028  GTRPMIX+FC60pi55
+  56  GTRPMIX+FC60pi56  1.0000000000  0.0432130966  GTRPMIX+FC60pi56
+  57  GTRPMIX+FC60pi57  1.0000000000  0.0000048663  GTRPMIX+FC60pi57
+  58  GTRPMIX+FC60pi58  1.0000000000  0.0148911728  GTRPMIX+FC60pi58
+  59  GTRPMIX+FC60pi59  1.0000000000  0.0159997946  GTRPMIX+FC60pi59
+  60  GTRPMIX+FC60pi60  1.0000000000  0.0048663035  GTRPMIX+FC60pi60
+
+Model of rate heterogeneity: FreeRate with 3 categories
+Site proportion and rates:  (0.5034813073,0.0401132884) (0.3126006650,0.4282439536) (0.1839180277,4.5995184645)
+
+ Category  Relative_rate  Proportion
+  1         0.0401132884   0.5034813073
+  2         0.4282439536   0.3126006650
+  3         4.5995184645   0.1839180277
+
+USER TREE
+---------
+
+Log-likelihood of the tree: -10340.0621030692 (s.e. 304.1942842784)
+Unconstrained log-likelihood (without tree): -5958.2343504163
+Number of free parameters (#branches + #model parameters): 100
+Akaike information criterion (AIC) score: 20880.1242061384
+Corrected Akaike information criterion (AICc) score: 20896.6815831875
+Bayesian information criterion (BIC) score: 21398.7386365906
+
+Total tree length (sum of branch lengths): 1.3433733478
+Sum of internal branch lengths: 0.3978782445 (29.6178456369% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Anabaena_cylindrica_PCC_7122' is drawn at root
+
++--Anabaena_cylindrica_PCC_7122
+|
+|                  +----Nostoc_sp_CENA543
+|               +--| (99)
+|               |  |              +----------Calothrix_rhizosoleniae_SC01
+|               |  |     +--------| (100)
+|               |  |     |        +--------------------------Richelia_intracellularis_HH01
+|               |  |  +--| (88)
+|               |  |  |  |  +--Chlorogloeopsis_fritschii_PCC_9212
+|               |  |  |  +--| (99)
+|               |  |  |     +------Fischerella_sp_NIES_4106
+|               |  +--| (98)
+|               |     |  +------Tolypothrix_bouteillei_VB521301
+|               |     +--| (57)
+|               |        |  +--------Chroococcidiopsis_thermalis_PCC_7203
+|               |        +--| (100)
+|               |           |  +----Peltula.bin.10
+|               |           +--| (97)
+|               |              |  +---------Gloeocapsa_sp_PCC_7428
+|               |              +--| (96)
+|               |                 +----------------Synechocystis_sp_PCC_7509
+|            +--| (81)
+|            |  +----Fortiea_contorta_PCC_7126
+|         +--| (84)
+|         |  |  +--Calothrix_sp_NIES_2100
+|         |  +--| (63)
+|         |     +--Tolypothrix_tenuis_PCC_7101
++---------| (100)
+|         |  +--JL23bin6
+|         +--| (95)
+|            +--Nostoc_sp_B_2019
+|
+|        +--Anabaena_sp_WA113
+|     +--| (79)
+|     |  +--Dolichospermum_planctonicum_strain_NIES_80
+|  +--| (97)
+|  |  +--Cuspidothrix_issatschenkoi_CHARLIE_1
++--| (92)
+   +--Trichormus_variabilis_PCC_6309
+
+Tree in newick format:
+
+(Anabaena_cylindrica_PCC_7122:0.0078869426,((((Nostoc_sp_CENA543:0.0400411242,(((Calothrix_rhizosoleniae_SC01:0.0837470724,Richelia_intracellularis_HH01:0.2022170211)100:0.0681889785,(Chlorogloeopsis_fritschii_PCC_9212:0.0224416932,Fischerella_sp_NIES_4106:0.0541085617)99:0.0274989132)88:0.0128579244,(Tolypothrix_bouteillei_VB521301:0.0579239768,(Chroococcidiopsis_thermalis_PCC_7203:0.0665947272,(Peltula.bin.10:0.0422961735,(Gloeocapsa_sp_PCC_7428:0.0802012812,Synechocystis_sp_PCC_7509:0.1312902471)96:0.0272840668)97:0.0222621696)100:0.0227197160)57:0.0049448060)98:0.0247077099)99:0.0269736239,Fortiea_contorta_PCC_7126:0.0439782452)81:0.0104393177,(Calothrix_sp_NIES_2100:0.0169829833,Tolypothrix_tenuis_PCC_7101:0.0139332851)63:0.0134261128)84:0.0160478763,(JL23bin6:0.0192426623,Nostoc_sp_B_2019:0.0081443912)95:0.0187178551)100:0.0810190028,(((Anabaena_sp_WA113:0.0171193964,Dolichospermum_planctonicum_strain_NIES_80:0.0040339207)79:0.0037680218,Cuspidothrix_issatschenkoi_CHARLIE_1:0.0095152107)97:0.0103591117,Trichormus_variabilis_PCC_6309:0.0237961876)92:0.0066630379);
+
+ALISIM COMMAND
+--------------
+Currently, we only support exporting AliSim commands automatically from the analysis for common models of DNA, Protein, Binary, and Morphological data. To simulate data from other models (mixture, lie-markov, etc), please refer to the User Manual of AliSim. Thanks!
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Aug  8 15:04:43 2025
+Total CPU time used: 670.3 seconds (0h:11m:10s)
+Total wall-clock time used: 14.419 seconds (0h:0m:14s)
+

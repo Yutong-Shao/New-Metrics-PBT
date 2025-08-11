@@ -1,0 +1,107 @@
+IQ-TREE version 3.0.1 for Linux x86 64-bit built May  5 2025
+Developed by Bui Quang Minh, Thomas Wong, Nhan Ly-Trong, Huaiyan Ren
+Contributed by Lam-Tung Nguyen, Dominik Schrempf, Chris Bielow,
+Olga Chernomor, Michael Woodhams, Diep Thi Hoang, Heiko Schmidt
+
+Host:    rona.rsb.anu.edu.au (AVX2, FMA3, 1007 GB RAM)
+Command: ./iqtree3 -s example/alignment.nex -ft example/infer/LG-C60opt-R3-PMSF-step0.treefile -m C60opt -safe -pre example/infer/LG-C60opt-R3-PMSF-step1 -n 0 -mdef example/C60opt.nex -T 50
+Seed:    488765 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Thu Aug  7 13:25:40 2025
+Kernel:  Safe AVX+FMA - 50 threads (256 CPU cores detected)
+
+Reading alignment file example/alignment.nex ... Nexus format detected
+Skipping unknown block (sets)...
+Alignment has 20 sequences with 1321 columns, 429 distinct patterns
+280 parsimony-informative, 149 singleton sites, 892 constant sites
+                                            Gap/Ambiguity  Composition  p-value
+Analyzing sequences: done in 9.90983e-05 secs using 87.79% CPU
+   1  Anabaena_cylindrica_PCC_7122                  0.00%    passed    100.00%
+   2  Nostoc_sp_CENA543                             0.00%    passed    100.00%
+   3  Calothrix_rhizosoleniae_SC01                  0.00%    passed     99.99%
+   4  Richelia_intracellularis_HH01                 0.00%    passed     99.01%
+   5  Chlorogloeopsis_fritschii_PCC_9212            0.00%    passed    100.00%
+   6  Fischerella_sp_NIES_4106                      0.00%    passed    100.00%
+   7  Tolypothrix_bouteillei_VB521301               0.00%    passed    100.00%
+   8  Chroococcidiopsis_thermalis_PCC_7203          0.00%    passed     99.99%
+   9  Peltula.bin.10                                0.00%    passed    100.00%
+  10  Gloeocapsa_sp_PCC_7428                        0.00%    passed     99.99%
+  11  Synechocystis_sp_PCC_7509                     0.00%    passed    100.00%
+  12  Calothrix_sp_NIES_2100                        0.00%    passed    100.00%
+  13  Tolypothrix_tenuis_PCC_7101                   0.00%    passed    100.00%
+  14  Fortiea_contorta_PCC_7126                     0.00%    passed    100.00%
+  15  JL23bin6                                      0.00%    passed    100.00%
+  16  Nostoc_sp_B_2019                              0.00%    passed    100.00%
+  17  Anabaena_sp_WA113                             0.00%    passed    100.00%
+  18  Dolichospermum_planctonicum_strain_NIES_80    0.00%    passed    100.00%
+  19  Cuspidothrix_issatschenkoi_CHARLIE_1          0.00%    passed    100.00%
+  20  Trichormus_variabilis_PCC_6309                0.00%    passed    100.00%
+****  TOTAL                                         0.00%  0 sequences failed composition chi2 test (p-value<5%; df=19)
+
+===> COMPUTING SITE FREQUENCY MODEL BASED ON TREE FILE example/infer/LG-C60opt-R3-PMSF-step0.treefile
+Reading model definition file example/C60opt.nex ... 87 models and 214 frequency vectors loaded
+Model C60opt is alias for LG+R3{0.5178326920,0.0310212393,0.3140932920,0.5192713336,0.1680740161,4.8837801628}+FMIX{C60pi1:1.0:0.0000072914,C60pi2:1.0:0.0401133877,C60pi3:1.0:0.0095519162,C60pi4:1.0:0.0000072914,C60pi5:1.0:0.0000072914,C60pi6:1.0:0.0014390190,C60pi7:1.0:0.0000072914,C60pi8:1.0:0.0000072914,C60pi9:1.0:0.0000072914,C60pi10:1.0:0.0000072914,C60pi11:1.0:0.0428077333,C60pi12:1.0:0.0362746139,C60pi13:1.0:0.0000072914,C60pi14:1.0:0.0186397470,C60pi15:1.0:0.0000072914,C60pi16:1.0:0.0000072914,C60pi17:1.0:0.0183229909,C60pi18:1.0:0.0463050701,C60pi19:1.0:0.0000072914,C60pi20:1.0:0.0339514610,C60pi21:1.0:0.0084671782,C60pi22:1.0:0.0000072914,C60pi23:1.0:0.0000072914,C60pi24:1.0:0.0088195900,C60pi25:1.0:0.0156677293,C60pi26:1.0:0.0000072914,C60pi27:1.0:0.0276849614,C60pi28:1.0:0.0000072914,C60pi29:1.0:0.0000072914,C60pi30:1.0:0.0649665831,C60pi31:1.0:0.0387755577,C60pi32:1.0:0.0174161739,C60pi33:1.0:0.0281619391,C60pi34:1.0:0.0571331287,C60pi35:1.0:0.0754599632,C60pi36:1.0:0.0268076461,C60pi37:1.0:0.0265629432,C60pi38:1.0:0.0270186266,C60pi39:1.0:0.0088157243,C60pi40:1.0:0.0229795063,C60pi41:1.0:0.0000072914,C60pi42:1.0:0.0117531120,C60pi43:1.0:0.0181130249,C60pi44:1.0:0.0459461617,C60pi45:1.0:0.0095745319,C60pi46:1.0:0.0000072914,C60pi47:1.0:0.0505274173,C60pi48:1.0:0.0163297551,C60pi49:1.0:0.0313382198,C60pi50:1.0:0.0000072914,C60pi51:1.0:0.0518383987,C60pi52:1.0:0.0000072914,C60pi53:1.0:0.0034137212,C60pi54:1.0:0.0000072914,C60pi55:1.0:0.0005876164,C60pi56:1.0:0.0280222822,C60pi57:1.0:0.0087805012,C60pi58:1.0:0.0000072914,C60pi59:1.0:0.0141802069,C60pi60:1.0:0.0072914490}
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+WARNING: Your input class weight 0.000587616 is very small and may cause numerical issues
+WARNING: Your input class weight 7.2914e-06 is very small and may cause numerical issues
+NOTE: 252 MB RAM is required!
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+1. Initial log-likelihood: -10431.789
+Optimal log-likelihood: -10431.781
+Mixture weights: 0.000 0.040 0.010 0.000 0.000 0.001 0.000 0.000 0.000 0.000 0.043 0.036 0.000 0.019 0.000 0.000 0.018 0.046 0.000 0.034 0.008 0.000 0.000 0.009 0.016 0.000 0.028 0.000 0.000 0.065 0.039 0.017 0.028 0.057 0.075 0.027 0.027 0.027 0.009 0.023 0.000 0.012 0.018 0.046 0.010 0.000 0.051 0.016 0.031 0.000 0.052 0.000 0.003 0.000 0.001 0.028 0.009 0.000 0.014 0.007
+Site proportion and rates:  (0.518,0.031) (0.314,0.519) (0.168,4.884)
+Parameters optimization took 1 rounds (1.109 sec)
+Computing posterior mean site frequencies....
+Site state frequency vectors printed to example/infer/LG-C60opt-R3-PMSF-step1.sitefreq
+
+===> CONTINUE ANALYSIS USING THE INFERRED SITE FREQUENCY MODEL
+Checking for duplicate sequences: done in 0.000383046 secs using 96.33% CPU
+Reading model definition file example/C60opt.nex ... 87 models and 214 frequency vectors loaded
+
+Create initial parsimony tree by phylogenetic likelihood library (PLL)... 0.004 seconds
+Model C60opt is alias for LG+R3{0.5178326920,0.0310212393,0.3140932920,0.5192713336,0.1680740161,4.8837801628}+FMIX{C60pi1:1.0:0.0000072914,C60pi2:1.0:0.0401133877,C60pi3:1.0:0.0095519162,C60pi4:1.0:0.0000072914,C60pi5:1.0:0.0000072914,C60pi6:1.0:0.0014390190,C60pi7:1.0:0.0000072914,C60pi8:1.0:0.0000072914,C60pi9:1.0:0.0000072914,C60pi10:1.0:0.0000072914,C60pi11:1.0:0.0428077333,C60pi12:1.0:0.0362746139,C60pi13:1.0:0.0000072914,C60pi14:1.0:0.0186397470,C60pi15:1.0:0.0000072914,C60pi16:1.0:0.0000072914,C60pi17:1.0:0.0183229909,C60pi18:1.0:0.0463050701,C60pi19:1.0:0.0000072914,C60pi20:1.0:0.0339514610,C60pi21:1.0:0.0084671782,C60pi22:1.0:0.0000072914,C60pi23:1.0:0.0000072914,C60pi24:1.0:0.0088195900,C60pi25:1.0:0.0156677293,C60pi26:1.0:0.0000072914,C60pi27:1.0:0.0276849614,C60pi28:1.0:0.0000072914,C60pi29:1.0:0.0000072914,C60pi30:1.0:0.0649665831,C60pi31:1.0:0.0387755577,C60pi32:1.0:0.0174161739,C60pi33:1.0:0.0281619391,C60pi34:1.0:0.0571331287,C60pi35:1.0:0.0754599632,C60pi36:1.0:0.0268076461,C60pi37:1.0:0.0265629432,C60pi38:1.0:0.0270186266,C60pi39:1.0:0.0088157243,C60pi40:1.0:0.0229795063,C60pi41:1.0:0.0000072914,C60pi42:1.0:0.0117531120,C60pi43:1.0:0.0181130249,C60pi44:1.0:0.0459461617,C60pi45:1.0:0.0095745319,C60pi46:1.0:0.0000072914,C60pi47:1.0:0.0505274173,C60pi48:1.0:0.0163297551,C60pi49:1.0:0.0313382198,C60pi50:1.0:0.0000072914,C60pi51:1.0:0.0518383987,C60pi52:1.0:0.0000072914,C60pi53:1.0:0.0034137212,C60pi54:1.0:0.0000072914,C60pi55:1.0:0.0005876164,C60pi56:1.0:0.0280222822,C60pi57:1.0:0.0087805012,C60pi58:1.0:0.0000072914,C60pi59:1.0:0.0141802069,C60pi60:1.0:0.0072914490}
+
+NOTE: 8 MB RAM (0 GB) is required!
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -8253.085
+2. Current log-likelihood: -8205.903
+3. Current log-likelihood: -8205.863
+Optimal log-likelihood: -8205.863
+Site proportion and rates:  (0.518,0.031) (0.314,0.519) (0.168,4.884)
+Parameters optimization took 3 rounds (0.068 sec)
+Wrote distance file to... 
+BEST SCORE FOUND : -8205.863
+Total tree length: 1.209
+
+Total number of iterations: 0
+CPU time used for tree search: 0.000 sec (0h:0m:0s)
+Wall-clock time used for tree search: 0.000 sec (0h:0m:0s)
+Total CPU time used: 4.749 sec (0h:0m:4s)
+Total wall-clock time used: 0.197 sec (0h:0m:0s)
+
+Analysis results written to: 
+  IQ-TREE report:                example/infer/LG-C60opt-R3-PMSF-step1.iqtree
+  Maximum-likelihood tree:       example/infer/LG-C60opt-R3-PMSF-step1.treefile
+  Screen log file:               example/infer/LG-C60opt-R3-PMSF-step1.log
+
+Date and Time: Thu Aug  7 13:25:41 2025

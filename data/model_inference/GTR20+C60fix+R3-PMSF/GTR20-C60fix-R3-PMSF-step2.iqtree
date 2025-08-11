@@ -1,0 +1,203 @@
+IQ-TREE 3.0.1 built May  5 2025
+
+Input file name: example/alignment.nex
+Type of analysis: tree reconstruction + ultrafast bootstrap (1000 replicates)
+Random seed number: 516559
+
+REFERENCES
+----------
+
+To cite IQ-TREE 3 please use:
+
+Thomas K.F. Wong, Nhan Ly-Trong, Huaiyan Ren, Hector Banos, Andrew J. Roger,
+Edward Susko, Chris Bielow, Nicola De Maio, Nick Goldman, Matthew W. Hahn,
+Gavin Huttley, Robert Lanfear, Bui Quang Minh (2025)
+IQ-TREE 3: Phylogenomic Inference Software using Complex Evolutionary Models.
+Submitted.
+
+Please also cite the following paper(s) for the feature(s) that you used:
+
+To cite MixtureFinder please use: 
+
+Huaiyan Ren, Thomas KF Wong, Bui Quang Minh, Robert Lanfear (2025)
+MixtureFinder: Estimating DNA Mixture Models for Phylogenetic Analyses.
+Molecular Biology and Evolution, 42:msae264.
+https://doi.org/10.1093/molbev/msae264
+
+Since you used site-specific frequency model please also cite: 
+
+Huai-Chun Wang, Edward Susko, Bui Quang Minh, and Andrew J. Roger (2018)
+Modeling site heterogeneity with posterior mean site frequency profiles
+accelerates accurate phylogenomic estimation. Syst. Biol., 67:216–235.
+https://doi.org/10.1093/sysbio/syx068
+
+Since you used ultrafast bootstrap (UFBoot) please also cite: 
+
+Diep Thi Hoang, Olga Chernomor, Arndt von Haeseler, Bui Quang Minh,
+and Le Sy Vinh (2018) UFBoot2: Improving the ultrafast bootstrap
+approximation. Mol. Biol. Evol., 35:518–522.
+https://doi.org/10.1093/molbev/msx281
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 20 sequences with 1321 amino-acid sites
+Number of constant sites: 892 (= 67.5246% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 892 (= 67.5246% of all sites)
+Number of parsimony informative sites: 280
+Number of distinct site patterns: 429
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: GTRPMIX+SSF+F+R3
+
+State frequencies: (site specific frequencies)
+
+Model of rate heterogeneity: FreeRate with 3 categories
+Site proportion and rates:  (0.7724,0.1031) (0.1475,2.4013) (0.0801,7.0669)
+
+ Category  Relative_rate  Proportion
+  1         0.1031         0.7724
+  2         2.4013         0.1475
+  3         7.0669         0.0801
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -8174.2707 (s.e. 287.0245)
+Unconstrained log-likelihood (without tree): -5958.2344
+Number of free parameters (#branches + #model parameters): 60
+Akaike information criterion (AIC) score: 16468.5413
+Corrected Akaike information criterion (AICc) score: 16474.3509
+Bayesian information criterion (BIC) score: 16779.7100
+
+Total tree length (sum of branch lengths): 1.2046
+Sum of internal branch lengths: 0.3471 (28.8170% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Anabaena_cylindrica_PCC_7122' is drawn at root
+Numbers in parentheses are  ultrafast bootstrap support (%)
+
++--Anabaena_cylindrica_PCC_7122
+|
+|                  +----Nostoc_sp_CENA543
+|               +--| (99)
+|               |  |              +----------Calothrix_rhizosoleniae_SC01
+|               |  |     +--------| (100)
+|               |  |     |        +---------------------------Richelia_intracellularis_HH01
+|               |  |  +--| (93)
+|               |  |  |  |  +--Chlorogloeopsis_fritschii_PCC_9212
+|               |  |  |  +--| (99)
+|               |  |  |     +------Fischerella_sp_NIES_4106
+|               |  +--| (100)
+|               |     |  +------Tolypothrix_bouteillei_VB521301
+|               |     +--| (65)
+|               |        |  +-------Chroococcidiopsis_thermalis_PCC_7203
+|               |        +--| (100)
+|               |           |  +----Peltula.bin.10
+|               |           +--| (99)
+|               |              |  +---------Gloeocapsa_sp_PCC_7428
+|               |              +--| (97)
+|               |                 +----------------Synechocystis_sp_PCC_7509
+|            +--| (82)
+|            |  +----Fortiea_contorta_PCC_7126
+|         +--| (79)
+|         |  |  +--Calothrix_sp_NIES_2100
+|         |  +--| (76)
+|         |     +--Tolypothrix_tenuis_PCC_7101
++---------| (100)
+|         |  +--JL23bin6
+|         +--| (97)
+|            +--Nostoc_sp_B_2019
+|
+|        +--Anabaena_sp_WA113
+|     +--| (82)
+|     |  +--Dolichospermum_planctonicum_strain_NIES_80
+|  +--| (91)
+|  |  +--Cuspidothrix_issatschenkoi_CHARLIE_1
++--| (89)
+   +--Trichormus_variabilis_PCC_6309
+
+Tree in newick format:
+
+(Anabaena_cylindrica_PCC_7122:0.0061634610,((((Nostoc_sp_CENA543:0.0346659329,(((Calothrix_rhizosoleniae_SC01:0.0766279790,Richelia_intracellularis_HH01:0.1955455995)100:0.0618449736,(Chlorogloeopsis_fritschii_PCC_9212:0.0193908509,Fischerella_sp_NIES_4106:0.0483015121)99:0.0217450762)93:0.0112124107,(Tolypothrix_bouteillei_VB521301:0.0522455801,(Chroococcidiopsis_thermalis_PCC_7203:0.0591234233,(Peltula.bin.10:0.0382460969,(Gloeocapsa_sp_PCC_7428:0.0736213028,Synechocystis_sp_PCC_7509:0.1187919085)97:0.0230655155)99:0.0185987715)100:0.0208376628)65:0.0034777917)100:0.0213621207)99:0.0233284311,Fortiea_contorta_PCC_7126:0.0379693896)82:0.0090070266,(Calothrix_sp_NIES_2100:0.0143731269,Tolypothrix_tenuis_PCC_7101:0.0121602574)76:0.0119973591)79:0.0138032434,(JL23bin6:0.0168907920,Nostoc_sp_B_2019:0.0066473218)97:0.0156464649)100:0.0727123463,(((Anabaena_sp_WA113:0.0145910984,Dolichospermum_planctonicum_strain_NIES_80:0.0034615725)82:0.0032954576,Cuspidothrix_issatschenkoi_CHARLIE_1:0.0080767663)91:0.0089621598,Trichormus_variabilis_PCC_6309:0.0205546765)89:0.0062236462);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Log-likelihood of consensus tree: -8174.270314
+Robinson-Foulds distance between ML tree and consensus tree: 0
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++--Anabaena_cylindrica_PCC_7122
+|
+|                  +----Nostoc_sp_CENA543
+|               +--| (99)
+|               |  |              +----------Calothrix_rhizosoleniae_SC01
+|               |  |     +--------| (100)
+|               |  |     |        +---------------------------Richelia_intracellularis_HH01
+|               |  |  +--| (93)
+|               |  |  |  |  +--Chlorogloeopsis_fritschii_PCC_9212
+|               |  |  |  +--| (99)
+|               |  |  |     +------Fischerella_sp_NIES_4106
+|               |  +--| (100)
+|               |     |  +------Tolypothrix_bouteillei_VB521301
+|               |     +--| (65)
+|               |        |  +-------Chroococcidiopsis_thermalis_PCC_7203
+|               |        +--| (100)
+|               |           |  +----Peltula.bin.10
+|               |           +--| (99)
+|               |              |  +---------Gloeocapsa_sp_PCC_7428
+|               |              +--| (97)
+|               |                 +----------------Synechocystis_sp_PCC_7509
+|            +--| (82)
+|            |  +----Fortiea_contorta_PCC_7126
+|         +--| (79)
+|         |  |  +--Calothrix_sp_NIES_2100
+|         |  +--| (76)
+|         |     +--Tolypothrix_tenuis_PCC_7101
++---------| (100)
+|         |  +--JL23bin6
+|         +--| (97)
+|            +--Nostoc_sp_B_2019
+|
+|        +--Anabaena_sp_WA113
+|     +--| (82)
+|     |  +--Dolichospermum_planctonicum_strain_NIES_80
+|  +--| (91)
+|  |  +--Cuspidothrix_issatschenkoi_CHARLIE_1
++--| (89)
+   +--Trichormus_variabilis_PCC_6309
+
+
+Consensus tree in newick format: 
+
+(Anabaena_cylindrica_PCC_7122:0.0061668578,((((Nostoc_sp_CENA543:0.0347182927,(((Calothrix_rhizosoleniae_SC01:0.0768169094,Richelia_intracellularis_HH01:0.1959698143)100:0.0619159094,(Chlorogloeopsis_fritschii_PCC_9212:0.0194176622,Fischerella_sp_NIES_4106:0.0483939561)99:0.0217790609)93:0.0112287471,(Tolypothrix_bouteillei_VB521301:0.0523668960,(Chroococcidiopsis_thermalis_PCC_7203:0.0592620715,(Peltula.bin.10:0.0383401794,(Gloeocapsa_sp_PCC_7428:0.0738211769,Synechocystis_sp_PCC_7509:0.1191103786)97:0.0231205328)99:0.0186305259)100:0.0208829744)65:0.0034842702)100:0.0213899163)99:0.0233621166,Fortiea_contorta_PCC_7126:0.0380284001)82:0.0090174590,(Calothrix_sp_NIES_2100:0.0143886127,Tolypothrix_tenuis_PCC_7101:0.0121798767)76:0.0120108981)79:0.0138179341,(JL23bin6:0.0169082921,Nostoc_sp_B_2019:0.0066582482)97:0.0156624459)100:0.0728181768,(((Anabaena_sp_WA113:0.0146077122,Dolichospermum_planctonicum_strain_NIES_80:0.0034652376)82:0.0032996214,Cuspidothrix_issatschenkoi_CHARLIE_1:0.0080849826)91:0.0089726206,Trichormus_variabilis_PCC_6309:0.0205797936)89:0.0062317384);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t example/infer/GTR20-C60fix-R3-PMSF-step2.treefile -m "GTRPMIX+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0834974,0.0498864,0.0508327,0.0586298,0.00601817,0.0418622,0.074489,0.0639667,0.0168433,0.057835,0.10617,0.0506056,0.0289553,0.0327782,0.0527631,0.0637774,0.0450795,0.0118092,0.0376609,0.0665405}+R3{0.772418,0.103143,0.147457,2.40134,0.0801247,7.06692}" --length 1321
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s example/alignment.nex --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s example/alignment.nex --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Aug  8 14:52:00 2025
+Total CPU time used: 2175.089381 seconds (0h:36m:15s)
+Total wall-clock time used: 45.03298763 seconds (0h:0m:45s)
+
