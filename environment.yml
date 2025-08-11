@@ -1,0 +1,10 @@
+name: pbt_new_metrics
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - scipy
+  - biopython
+  - setuptools
