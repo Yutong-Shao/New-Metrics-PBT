@@ -19,6 +19,8 @@ The closer the mean diversity of the simulated dataset is to that of the empiric
 
 Evaluation results for this metric are written to the file: `mean_diversity_results.txt`
 
+> This method was proposed in [Giacomelli et al., 2025](https://doi.org/10.1093/gbe/evae273).
+
 ### 2. Mean Entropy
 
 ***The average uncertainty of the amino acid frequency distribution (Shannon entropy)*** at each site within a simulated dataset.
@@ -43,11 +45,53 @@ Evaluation results for this metric are written to the file: `cvm_entropy_results
 
 ## Step One: Model Fitting
 
-<details>
-<summary> Tips</summary>
+This part of the phylogenetic analysis is performed using the [IQ-TREE](https://github.com/iqtree/iqtree3) software package.
+Below is an example pipeline using the **LG-C60opt-R6-PMSF** model:
+
+1) Run the LG+C60+R6 model on the protein alignment file `alignment.nex`, using a guide tree, and optimize the profile weights of C60:
+
+    ```
+    iqtree3 -s alignment.nex -m LG+C60+R6 -te guide.treefile -me 0.99 -safe -mwopt -pre LG_C60opt -prec 10
+    ```
+
+2) Use the `extract_profiles_weights.py` function to extract the optimized weights from the `LG_C60opt.iqtree` file generated in the first step. The weights will be saved as a `.txt` file in the same directory.
+
+    ```
+    python extract_profiles_weights.py <input_directory>
+    ```
+
+   Here, <input_directory> refers to the folder containing the `LG_C60opt.iqtree` file.
+
+
+3) Define a new model based on the optimized weights and save it as `C60opt.nex`. Then run the first phase of the PMSF method in IQ-TREE to estimate the mixture model parameters and infer the site-specific frequency profile.
+
+    ```
+    iqtree3 -s alignment.nex -ft guide.treefile -m C60opt -mdef C60opt.nex -safe -pre LG_C60opt_PMSF_step1 -n 0
+    ```
+
+4) Run the second phase of the PMSF method, performing phylogenetic inference using the site-frequency profile obtained from the previous step.
+
+    ```
+    iqtree3 -s alignment.nex -fs LG_C60opt_PMSF_step1.sitefreq -m C60opt -mdef C60opt.nex -safe -pre infer/LG_C60opt_PMSF_step2 --wbtl -wsr -bb 1000
+    ```
+
+5) Use the `combine_sitefq_tate.py` function to generate a `LG_C60opt_PMSF.nex` file. This file defines a partition model where each site is treated as a separate partition, which is required for sequence simulation.
+
+    ```
+    python combine_sitefq_tate.py <input_folder>
+    ```
+
+    Note:
+    
+    To use `combine_sitefq_tate.py`, please make sure the files `XX_step1.sitefreq`, `XX_step2.rate`, and `XX_step2.iqtree` are all in the same folder, and share the same filename prefix.
+
+6) Use the [Alisim](https://doi.org/10.1093/molbev/msac092) function in IQ-TREE to simulate sequence alignments based on the inferred partition model and tree.
+
+   ```
+   iqtree3 --alisim LG_C60opt_PMSF/seq --seqtype AA -p LG_C60opt_PMSF.nex -t LG_C60opt_PMSF_step2.contree --length [seq_length] --out-format fasta --num-alignments 100
+   ```
 
 For more details, please refer to the `data/tutorial.pdf` file.
-</details>
 
 
 ## Step Two: Starting Parametric Bootstrap Test
