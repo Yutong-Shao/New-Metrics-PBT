@@ -4,7 +4,6 @@ import os
 import sys
 import math
 import time
-import glob
 from collections import Counter
 from concurrent.futures import ProcessPoolExecutor
 from Bio.SeqIO.FastaIO import SimpleFastaParser
@@ -59,21 +58,36 @@ def read_fasta_dict(filepath):
     with open(filepath, "r") as f:
         return {title: seq for title, seq in SimpleFastaParser(f)}
 
-def stage1_add_gaps(sim_root_dir, original_alignment_path):
+def stage1_add_gaps(sim_root, original_alignment_path):
     print(f"\n[STEP 1] Loading original alignment: {original_alignment_path}")
     orig = read_fasta(original_alignment_path)
     headers = [r["header"] for r in orig]
     gap_pos = get_gap_positions(orig)
 
-    for model in sorted(os.listdir(sim_root_dir)):
-        mp = os.path.join(sim_root_dir, model)
+    for model in sorted(os.listdir(sim_root)):
+        mp = os.path.join(sim_root, model)
         if not os.path.isdir(mp):
             continue
+
+        fasta_files = sorted([
+            fn for fn in os.listdir(mp)
+            if fn.endswith(".fa") or fn.endswith(".fasta")
+        ])
+
+        all_gaps_exist = all(
+            os.path.exists(os.path.join(mp, f"{fn}_gap"))
+            for fn in fasta_files
+        )
+        if all_gaps_exist:
+            print(f"[SKIP] All gap files exist in: {model}")
+            continue
+
         print(f"[MODEL] Adding gaps in: {model}")
-        for fn in sorted(os.listdir(mp)):
-            if not (fn.endswith(".fa") or fn.endswith(".fasta")):
-                continue
+        for fn in fasta_files:
             path = os.path.join(mp, fn)
+            gap_path = os.path.join(mp, f"{fn}_gap")
+            if os.path.exists(gap_path):
+                continue
             sim = read_fasta(path)
             if len(sim) != len(orig):
                 continue
@@ -82,10 +96,9 @@ def stage1_add_gaps(sim_root_dir, original_alignment_path):
             for i in range(len(sim)):
                 sim[i]["header"] = headers[i]
             gapped = transfer_gaps(sim, gap_pos)
-            outfn = f"{fn}_gap"
-            write_fasta(os.path.join(mp, outfn), gapped)
+            write_fasta(gap_path, gapped)
 
-# ---------- Step 2: Mean entropy & diversity in parallel ----------
+# Mean entropy & diversity
 
 def calc_shannon_entropy(column):
     counts = Counter(aa for aa in column if aa not in {"-", "X", "?"})
@@ -122,22 +135,17 @@ def compute_zscore(original, simulated_list):
     z = -(original - avg) / sd if sd != 0 else float("nan")
     return avg, sd, z
 
-def process_model_folder(model_path, original_alignment):
+def process_model_folder_entropy(model_path, original_alignment):
     entropy_vals = []
-    diversity_vals = []
     entropy_files = []
-    diversity_files = []
 
     for file in os.listdir(model_path):
         if file.endswith(".fa_gap"):
             full_path = os.path.join(model_path, file)
             sequences = read_fasta_dict(full_path)
             entropy = calc_mean_entropy(sequences)
-            diversity = calc_mean_diversity(sequences)
             entropy_vals.append(entropy)
             entropy_files.append(file)
-            diversity_vals.append(diversity)
-            diversity_files.append(file)
 
     if entropy_vals:
         avg_e, sd_e, z_e = compute_zscore(calc_mean_entropy(original_alignment), entropy_vals)
@@ -153,6 +161,18 @@ def process_model_folder(model_path, original_alignment):
             for file, val in zip(entropy_files, entropy_vals):
                 f.write(f"{file}\t{val}\n")
 
+def process_model_folder_diversity(model_path, original_alignment):
+    diversity_vals = []
+    diversity_files = []
+
+    for file in os.listdir(model_path):
+        if file.endswith(".fa_gap"):
+            full_path = os.path.join(model_path, file)
+            sequences = read_fasta_dict(full_path)
+            diversity = calc_mean_diversity(sequences)
+            diversity_vals.append(diversity)
+            diversity_files.append(file)
+
     if diversity_vals:
         avg_d, sd_d, z_d = compute_zscore(calc_mean_diversity(original_alignment), diversity_vals)
         with open(os.path.join(model_path, "diversity.pbr_gaps"), "w") as f:
@@ -167,68 +187,84 @@ def process_model_folder(model_path, original_alignment):
             for file, val in zip(diversity_files, diversity_vals):
                 f.write(f"{file}\t{val}\n")
 
-def stage2_parallel_entropy_diversity(sim_root, orig_path, num_cpus):
+def stage2_entropy_only(sim_root, orig_path):
+    print(f"\n[MEAN ENTROPY PROGRESS] Computing entropy for each model folder...")
     original_alignment = read_fasta_dict(orig_path)
     model_dirs = [os.path.join(sim_root, d) for d in sorted(os.listdir(sim_root)) if os.path.isdir(os.path.join(sim_root, d))]
-    print(f"\n[STEP 2] Computing entropy & diversity using {num_cpus} CPUs...")
-    with ProcessPoolExecutor(max_workers=num_cpus) as executor:
-        for model_dir in model_dirs:
-            executor.submit(process_model_folder, model_dir, original_alignment)
 
-def summarize_mean_values(sim_root_dir):
-    diversity_summary = []
+    for model_dir in model_dirs:
+        print(f"Processing model: {os.path.basename(model_dir)}")
+        process_model_folder_entropy(model_dir, original_alignment)
+
+def stage2_diversity_only(sim_root, orig_path):
+    print(f"\n[MEAN DIVERSITY PROGRESS] Computing diversity for each model folder...")
+    original_alignment = read_fasta_dict(orig_path)
+    model_dirs = [os.path.join(sim_root, d) for d in sorted(os.listdir(sim_root)) if os.path.isdir(os.path.join(sim_root, d))]
+
+    for model_dir in model_dirs:
+        print(f"Processing model: {os.path.basename(model_dir)}")
+        process_model_folder_diversity(model_dir, original_alignment)
+
+def summarize_mean_entropy_values(sim_root):
     entropy_summary = []
 
-    for model in sorted(os.listdir(sim_root_dir)):
-        model_path = os.path.join(sim_root_dir, model)
+    for model in sorted(os.listdir(sim_root)):
+        model_path = os.path.join(sim_root, model)
         if not os.path.isdir(model_path):
             continue
 
-        # Diversity
-        div_path = os.path.join(model_path, "diversity.pbr_gaps")
-        if os.path.isfile(div_path):
-            with open(div_path, "r") as f:
-                lines = f.readlines()
-                try:
-                    div_orig = float(lines[1].split(":")[1].strip())
-                    div_avg = float(lines[2].split(":")[1].strip())
-                    div_sd = float(lines[3].split(":")[1].strip())
-                    div_z = float(lines[4].split(":")[1].strip())
-                    diversity_summary.append([model, div_orig, div_avg, div_sd, div_z])
-                except:
-                    print(f"[WARNING] Failed to parse {div_path}")
-
-        # Entropy
         ent_path = os.path.join(model_path, "entropy.pbr_gaps")
         if os.path.isfile(ent_path):
             with open(ent_path, "r") as f:
                 lines = f.readlines()
                 try:
                     ent_orig = float(lines[1].split(":")[1].strip())
-                    ent_avg = float(lines[2].split(":")[1].strip())
-                    ent_sd = float(lines[3].split(":")[1].strip())
-                    ent_z = float(lines[4].split(":")[1].strip())
+                    ent_avg  = float(lines[2].split(":")[1].strip())
+                    ent_sd   = float(lines[3].split(":")[1].strip())
+                    ent_z    = float(lines[4].split(":")[1].strip())
                     entropy_summary.append([model, ent_orig, ent_avg, ent_sd, ent_z])
                 except:
                     print(f"[WARNING] Failed to parse {ent_path}")
 
-    # Write diversity summary
-    with open(os.path.join(sim_root_dir, "mean_diversity_results.txt"), "w") as f:
-        f.write("Model\tDiversity original data\tAverage diversity simulated data\tSD simulated data\tZ-score\n")
-        for row in diversity_summary:
-            f.write(f"{row[0]}\t{row[1]}\t{row[2]}\t{row[3]}\t{row[4]}\n")
-
-    # Write entropy summary
-    with open(os.path.join(sim_root_dir, "mean_entropy_results.txt"), "w") as f:
+    out_path = os.path.join(sim_root, "mean_entropy_results.txt")
+    with open(out_path, "w") as f:
         f.write("Model\tEntropy original data\tAverage entropy simulated data\tSD simulated data\tZ-score\n")
         for row in entropy_summary:
             f.write(f"{row[0]}\t{row[1]}\t{row[2]}\t{row[3]}\t{row[4]}\n")
+    print(f"Entropy summary written to {out_path}")
 
+def summarize_mean_diversity_values(sim_root):
+    diversity_summary = []
 
-# ---------- Step 3a: Original per-site entropy & diversity ----------
+    for model in sorted(os.listdir(sim_root)):
+        model_path = os.path.join(sim_root, model)
+        if not os.path.isdir(model_path):
+            continue
 
-def compute_original_sitewise(sim_root, orig_path):
-    print("\n[STEP 3a] Computing per-site entropy & diversity for original alignment")
+        div_path = os.path.join(model_path, "diversity.pbr_gaps")
+        if os.path.isfile(div_path):
+            with open(div_path, "r") as f:
+                lines = f.readlines()
+                try:
+                    div_orig = float(lines[1].split(":")[1].strip())
+                    div_avg  = float(lines[2].split(":")[1].strip())
+                    div_sd   = float(lines[3].split(":")[1].strip())
+                    div_z    = float(lines[4].split(":")[1].strip())
+                    diversity_summary.append([model, div_orig, div_avg, div_sd, div_z])
+                except:
+                    print(f"[WARNING] Failed to parse {div_path}")
+
+    out_path = os.path.join(sim_root, "mean_diversity_results.txt")
+    with open(out_path, "w") as f:
+        f.write("Model\tDiversity original data\tAverage diversity simulated data\tSD simulated data\tZ-score\n")
+        for row in diversity_summary:
+            f.write(f"{row[0]}\t{row[1]}\t{row[2]}\t{row[3]}\t{row[4]}\n")
+    print(f"Diversity summary written to {out_path}")
+
+# Original per-site entropy & diversity
+
+def compute_original_sitewise_entropy(sim_root, orig_path):
+    print("\n[CVM TEST ON SITE-WISE ENTROPY PROGRESS] Computing per-site entropy for original alignment")
     with open(orig_path, "r") as f:
         seqs = {h: s for h, s in SimpleFastaParser(f)}
     L = len(next(iter(seqs.values())))
@@ -238,6 +274,12 @@ def compute_original_sitewise(sim_root, orig_path):
         f.write("site\tentropy\n")
         for i, v in enumerate(entropy_vals, 1):
             f.write(f"{i}\t{v:.6f}\n")
+
+def compute_original_sitewise_diversity(sim_root, orig_path):
+    print("\n[CVM TEST ON SITE-WISE DIVERSITY PROGRESS] Computing per-site diversity for original alignment")
+    with open(orig_path, "r") as f:
+        seqs = {h: s for h, s in SimpleFastaParser(f)}
+    L = len(next(iter(seqs.values())))
 
     diversity_vals = [calc_site_diversity([s[i] for s in seqs.values()]) for i in range(L)]
     with open(os.path.join(sim_root, "original.sitewise_diversity.txt"), "w") as f:
@@ -282,79 +324,99 @@ def compute_sitewise_entropy(fasta_path):
         for i, v in enumerate(ents, 1):
             out.write(f"{i}\t{v:.6f}\n")
 
-def process_gap_file(path):
-    compute_sitewise_diversity(path)
-    compute_sitewise_entropy(path)
-
-def stage3_compute_metrics_parallel(sim_root_dir, num_cpus):
-    gap_files = []
-    for model in sorted(os.listdir(sim_root_dir)):
-        mp = os.path.join(sim_root_dir, model)
+def stage3_compute_sitewise_entropy(sim_root):
+    print("\nComputing per-site entropy for all .fa_gap files...")
+    for model in sorted(os.listdir(sim_root)):
+        mp = os.path.join(sim_root, model)
         if not os.path.isdir(mp):
             continue
-        for fn in os.listdir(mp):
+        for fn in sorted(os.listdir(mp)):
             if fn.endswith(".fa_gap"):
-                gap_files.append(os.path.join(mp, fn))
+                path = os.path.join(mp, fn)
+                compute_sitewise_entropy(path)
 
-    print(f"\n[STEP 3b] Computing per-site metrics on {len(gap_files)} files using {num_cpus} CPUs...")
-    with ProcessPoolExecutor(max_workers=num_cpus) as ex:
-        ex.map(process_gap_file, gap_files)
+def stage3_compute_sitewise_diversity(sim_root):
+    print("\nComputing per-site diversity for all .fa_gap files...")
+    for model in sorted(os.listdir(sim_root)):
+        mp = os.path.join(sim_root, model)
+        if not os.path.isdir(mp):
+            continue
+        for fn in sorted(os.listdir(mp)):
+            if fn.endswith(".fa_gap"):
+                path = os.path.join(mp, fn)
+                compute_sitewise_diversity(path)
 
+def cvm_test_entropy_per_model(sim_root):
+    print("\nRunning CvM test comparing model sitewise metrics to original")
 
-# ---------- Step 4: CvM Test ----------
-
-def cvm_test_per_model(sim_root_dir):
-    print("\n[STEP 4] Running CvM test comparing model sitewise metrics to original")
-    # Load original
-    orig_div = pd.read_csv(os.path.join(sim_root_dir, "original.sitewise_diversity.txt"), sep='\t')["diversity"].values
-    orig_ent = pd.read_csv(os.path.join(sim_root_dir, "original.sitewise_entropy.txt"), sep='\t')["entropy"].values
+    # Load original sitewise entropy
+    orig_ent_path = os.path.join(sim_root, "original.sitewise_entropy.txt")
+    if not os.path.isfile(orig_ent_path):
+        print(f"[ERROR] Missing original sitewise entropy: {orig_ent_path}")
+        return
+    orig_ent = pd.read_csv(orig_ent_path, sep='\t')["entropy"].values
 
     entropy_results = []
-    diversity_results = []
 
-    for model in sorted(os.listdir(sim_root_dir)):
-        model_path = os.path.join(sim_root_dir, model)
+    for model in sorted(os.listdir(sim_root)):
+        model_path = os.path.join(sim_root, model)
         if not os.path.isdir(model_path):
             continue
-        for file in os.listdir(model_path):
+
+        for file in sorted(os.listdir(model_path)):
             if file.endswith(".fa_gap.sitewise_entropy.txt"):
                 df = pd.read_csv(os.path.join(model_path, file), sep='\t')
                 seq_vals = df["entropy"].values
                 result = cramervonmises_2samp(seq_vals, orig_ent)
                 entropy_results.append((model, file, result.statistic, result.pvalue))
-            elif file.endswith(".fa_gap.sitewise_diversity.txt"):
+
+    out_path = os.path.join(sim_root, "cvm_entropy_results.txt")
+    with open(out_path, "w") as f:
+        f.write("model\tfile\tW2_statistic\tp_value\n")
+        for m, f_, s, p in entropy_results:
+            f.write(f"{m}\t{f_}\t{s:.6e}\t{p:.6e}\n")
+    print(f"Entropy CvM results written to {out_path}")
+
+def cvm_test_diversity_per_model(sim_root):
+    print("\nRunning CvM test comparing model sitewise metrics to original")
+
+    # Load original sitewise diversity
+    orig_div_path = os.path.join(sim_root, "original.sitewise_diversity.txt")
+    if not os.path.isfile(orig_div_path):
+        print(f"[ERROR] Missing original sitewise diversity: {orig_div_path}")
+        return
+    orig_div = pd.read_csv(orig_div_path, sep='\t')["diversity"].values
+
+    diversity_results = []
+
+    for model in sorted(os.listdir(sim_root)):
+        model_path = os.path.join(sim_root, model)
+        if not os.path.isdir(model_path):
+            continue
+
+        for file in sorted(os.listdir(model_path)):
+            if file.endswith(".fa_gap.sitewise_diversity.txt"):
                 df = pd.read_csv(os.path.join(model_path, file), sep='\t')
                 seq_vals = df["diversity"].values
                 result = cramervonmises_2samp(seq_vals, orig_div)
                 diversity_results.append((model, file, result.statistic, result.pvalue))
 
-    with open(os.path.join(sim_root_dir, "cvm_entropy_results.txt"), "w") as f:
-        f.write("model\tfile\tW2_statistic\tp_value\n")
-        for m, f_, s, p in entropy_results:
-            f.write(f"{m}\t{f_}\t{s:.6e}\t{p:.6e}\n")
-
-    with open(os.path.join(sim_root_dir, "cvm_diversity_results.txt"), "w") as f:
+    out_path = os.path.join(sim_root, "cvm_diversity_results.txt")
+    with open(out_path, "w") as f:
         f.write("model\tfile\tW2_statistic\tp_value\n")
         for m, f_, s, p in diversity_results:
             f.write(f"{m}\t{f_}\t{s:.6e}\t{p:.6e}\n")
+    print(f"Diversity CvM results written to {out_path}")
 
+# Find Best-fit Model and Print Sorted List
 
-# ---------- Step 5: Find Best-fit Model and Print Sorted List ----------
-
-def find_best_fit_model_by_mean_difference(file_path, metric_name):
+def find_best_fit_model_by_mean_difference_entropy(file_path):
     global printed_model_adequacy_header
 
     df = pd.read_csv(file_path, sep="\t")
 
-    if metric_name.lower() == "diversity":
-        orig_col = "Diversity original data"
-        avg_col = "Average diversity simulated data"
-    elif metric_name.lower() == "entropy":
-        orig_col = "Entropy original data"
-        avg_col = "Average entropy simulated data"
-    else:
-        print(f"[ERROR] Unknown metric: {metric_name}")
-        return
+    orig_col = "Entropy original data"
+    avg_col  = "Average entropy simulated data"
 
     df["abs_diff"] = (df[orig_col] - df[avg_col]).abs()
     df_sorted = df.sort_values(by="abs_diff")
@@ -366,13 +428,13 @@ def find_best_fit_model_by_mean_difference(file_path, metric_name):
         print()
         print("Model Adequacy Evaluation")
         print("----------------------")
-        printed_model_adequacy_header = True  # set flag so it won't print again
+        printed_model_adequacy_header = True
 
     print()
     print()
-    print(f"Best-fit model according to Mean Difference ({metric_name}): {best_model}")
+    print(f"Best-fit model according to Mean Difference (entropy): {best_model}")
     print()
-    print(f"List of models sorted by |original - simulated| for {metric_name}:")
+    print(f"List of models sorted by |original - simulated| for entropy:")
     print()
     header = f"{'Model':<35} {orig_col:<25} {avg_col:<30} {'SD simulated':<18} {'Z-score':<10} {'|Diff|':<10}"
     print(header)
@@ -380,15 +442,50 @@ def find_best_fit_model_by_mean_difference(file_path, metric_name):
     print()
 
     for _, row in df_sorted.iterrows():
-        print(f"{row['Model']:<35} {row[orig_col]:<25.6f} {row[avg_col]:<30.6f} {row['SD simulated data']:<18.6f} {row['Z-score']:<10.3f} {row['abs_diff']:<10.6f}")
+        print(f"{row['Model']:<35} {row[orig_col]:<25.6f} {row[avg_col]:<30.6f} "
+              f"{row['SD simulated data']:<18.6f} {row['Z-score']:<10.3f} {row['abs_diff']:<10.6f}")
 
-def find_best_fit_model_by_cvm(file_path, metric_name):
+def find_best_fit_model_by_mean_difference_diversity(file_path):
+    global printed_model_adequacy_header
+
+    df = pd.read_csv(file_path, sep="\t")
+
+    orig_col = "Diversity original data"
+    avg_col  = "Average diversity simulated data"
+
+    df["abs_diff"] = (df[orig_col] - df[avg_col]).abs()
+    df_sorted = df.sort_values(by="abs_diff")
+
+    best_model = df_sorted.iloc[0]["Model"]
+
+    if not printed_model_adequacy_header:
+        print()
+        print()
+        print("Model Adequacy Evaluation")
+        print("----------------------")
+        printed_model_adequacy_header = True
+
+    print()
+    print()
+    print(f"Best-fit model according to Mean Difference (diversity): {best_model}")
+    print()
+    print(f"List of models sorted by |original - simulated| for diversity:")
+    print()
+    header = f"{'Model':<35} {orig_col:<25} {avg_col:<30} {'SD simulated':<18} {'Z-score':<10} {'|Diff|':<10}"
+    print(header)
+    print("-" * len(header))
+    print()
+
+    for _, row in df_sorted.iterrows():
+        print(f"{row['Model']:<35} {row[orig_col]:<25.6f} {row[avg_col]:<30.6f} "
+              f"{row['SD simulated data']:<18.6f} {row['Z-score']:<10.3f} {row['abs_diff']:<10.6f}")
+
+def find_best_fit_model_by_cvm_entropy(file_path):
     global printed_model_adequacy_header
 
     df = pd.read_csv(file_path, sep="\t")
     model_means = df.groupby("model")["W2_statistic"].mean()
     sorted_models = model_means.sort_values()
-
     best_model = sorted_models.index[0]
 
     if not printed_model_adequacy_header:
@@ -396,15 +493,43 @@ def find_best_fit_model_by_cvm(file_path, metric_name):
         print()
         print("Model Adequacy Evaluation")
         print("----------------------")
-        printed_model_adequacy_header = True  # set flag so it won't print again
+        printed_model_adequacy_header = True
 
     print()
     print()
-    print(f"Best-fit model according to Cvm Test ({metric_name}): {best_model}")
+    print(f"Best-fit model according to Cvm Test (entropy): {best_model}")
     print()
-    print(f"List of models sorted by Cvm Test ({metric_name}) W2_statistic:")
+    print(f"List of models sorted by Cvm Test (entropy) W2_statistic:")
     print()
     print(f"{'Model':<35} {'W2_statistic':>15}")
+    print("-" * 51)
+    for model, val in sorted_models.items():
+        print(f"{model:<35} {val:>15.6f}")
+    print()
+
+def find_best_fit_model_by_cvm_diversity(file_path):
+    global printed_model_adequacy_header
+
+    df = pd.read_csv(file_path, sep="\t")
+    model_means = df.groupby("model")["W2_statistic"].mean()
+    sorted_models = model_means.sort_values()
+    best_model = sorted_models.index[0]
+
+    if not printed_model_adequacy_header:
+        print()
+        print()
+        print("Model Adequacy Evaluation")
+        print("----------------------")
+        printed_model_adequacy_header = True
+
+    print()
+    print()
+    print(f"Best-fit model according to Cvm Test (diversity): {best_model}")
+    print()
+    print(f"List of models sorted by Cvm Test (diversity) W2_statistic:")
+    print()
+    print(f"{'Model':<35} {'W2_statistic':>15}")
+    print("-" * 51)
     for model, val in sorted_models.items():
         print(f"{model:<35} {val:>15.6f}")
     print()
@@ -413,12 +538,22 @@ def find_best_fit_model_by_cvm(file_path, metric_name):
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: python PBT.py <SimRootFolder> <OriginalAlignment> [NumCPUs]")
+        print("Usage: python PBT.py <SimRootFolder> <OriginalAlignment> [options]")
+        print("Options (can be combined; none = run ALL):")
+        print("  -mdiv     : run mean-diversity pipeline after stage1")
+        print("  -ment     : run mean-entropy pipeline after stage1")
+        print("  -cvmdiv   : run CvM-diversity pipeline after stage1")
+        print("  -cvment   : run CvM-entropy pipeline after stage1")
         sys.exit(1)
 
     sim_root = sys.argv[1]
     orig_path = sys.argv[2]
-    cpus = int(sys.argv[3]) if len(sys.argv) > 3 else 1
+    flags = set(a.lower() for a in sys.argv[3:])
+
+    allowed_flags = {"-mdiv", "-ment", "-cvmdiv", "-cvment"}
+    unknown = [f for f in flags if f not in allowed_flags]
+    if unknown:
+        print(f"[WARNING] Unknown option(s): {unknown}. They will be ignored.")
 
     if not os.path.isdir(sim_root):
         print(f"[ERROR] Simulation folder not found: {sim_root}")
@@ -427,10 +562,8 @@ def main():
         print(f"[ERROR] Original alignment not found: {orig_path}")
         sys.exit(1)
 
-    # Start time
     start_time = time.time()
 
-    # Logging setup
     class Logger(object):
         def __init__(self, logfile_path):
             self.terminal = sys.stdout
@@ -445,7 +578,6 @@ def main():
     log_path = os.path.join(sim_root, "PBT.log")
     sys.stdout = Logger(log_path)
 
-    # Log header
     print("=" * 60)
     print(f"DATE AND TIME: {time.strftime('%a %b %d %H:%M:%S %Y', time.localtime(start_time))}")
     print("Starting parametric bootstrap test for model adequacy")
@@ -453,31 +585,79 @@ def main():
     print(f"Original alignment path: {orig_path}")
     print("=" * 60 + "\n")
 
-    # Actual steps
+    run_all   = (len(flags) == 0)
+    run_mean_div = run_all or ("-mdiv" in flags)
+    run_mean_ent = run_all or ("-ment" in flags)
+    run_cvm_div  = run_all or ("-cvmdiv" in flags)
+    run_cvm_ent  = run_all or ("-cvment" in flags)
+
     stage1_add_gaps(sim_root, orig_path)
-    stage2_parallel_entropy_diversity(sim_root, orig_path, cpus)
-    summarize_mean_values(sim_root)
-    compute_original_sitewise(sim_root, orig_path)
-    stage3_compute_metrics_parallel(sim_root, cpus)
-    cvm_test_per_model(sim_root)
 
-    # Step 5: Print mean-based best-fit model and sorted list
-    mean_entropy_file = os.path.join(sim_root, "mean_entropy_results.txt")
-    mean_diversity_file = os.path.join(sim_root, "mean_diversity_results.txt")
-    if os.path.isfile(mean_entropy_file):
-        find_best_fit_model_by_mean_difference(mean_entropy_file, "entropy")
-    if os.path.isfile(mean_diversity_file):
-        find_best_fit_model_by_mean_difference(mean_diversity_file, "diversity")
+    # Mean-Entropy
+    if run_mean_ent:
+        print("\n[MODE] Mean-Entropy")
+        stage2_entropy_only(sim_root, orig_path)
+        summarize_mean_entropy_values(sim_root)
 
-    # Step 6: Print best-fit model and sorted list
-    entropy_file = os.path.join(sim_root, "cvm_entropy_results.txt")
-    diversity_file = os.path.join(sim_root, "cvm_diversity_results.txt")
-    if os.path.isfile(entropy_file):
-        find_best_fit_model_by_cvm(entropy_file, "entropy")
-    if os.path.isfile(diversity_file):
-        find_best_fit_model_by_cvm(diversity_file, "diversity")
+    # Mean-Diversity
+    if run_mean_div:
+        print("\n[MODE] Mean-Diversity")
+        stage2_diversity_only(sim_root, orig_path)
+        summarize_mean_diversity_values(sim_root)
 
-    # Final log time
+    # CvM-Entropy
+    if run_cvm_ent:
+        print("\n[MODE] CvM-Entropy")
+        ent_ref = os.path.join(sim_root, "original.sitewise_entropy.txt")
+        if not os.path.isfile(ent_ref):
+            compute_original_sitewise_entropy(sim_root, orig_path)
+        stage3_compute_sitewise_entropy(sim_root)
+        cvm_test_entropy_per_model(sim_root)
+
+    # CvM-Diversity
+    if run_cvm_div:
+        print("\n[MODE] CvM-Diversity")
+        div_ref = os.path.join(sim_root, "original.sitewise_diversity.txt")
+        if not os.path.isfile(div_ref):
+            compute_original_sitewise_diversity(sim_root, orig_path)
+        stage3_compute_sitewise_diversity(sim_root)
+        cvm_test_diversity_per_model(sim_root)
+
+    print("\n[REPORT] CONSOLIDATED BEST-FIT SUMMARIES")
+
+    # Mean-based best-fit
+    if run_mean_ent:
+        mean_ent_file = os.path.join(sim_root, "mean_entropy_results.txt")
+        if os.path.isfile(mean_ent_file):
+            find_best_fit_model_by_mean_difference_entropy(mean_ent_file)
+        else:
+            print("[INFO] mean_entropy_results.txt not found; skip mean-entropy summary.")
+
+    if run_mean_div:
+        mean_div_file = os.path.join(sim_root, "mean_diversity_results.txt")
+        if os.path.isfile(mean_div_file):
+            find_best_fit_model_by_mean_difference_diversity(mean_div_file)
+        else:
+            print("[INFO] mean_diversity_results.txt not found; skip mean-diversity summary.")
+
+    # CvM-based best-fit
+    if run_cvm_ent:
+        cvm_ent_file = os.path.join(sim_root, "cvm_entropy_results.txt")
+        if os.path.isfile(cvm_ent_file):
+            find_best_fit_model_by_cvm_entropy(cvm_ent_file)
+        else:
+            print("[INFO] cvm_entropy_results.txt not found; skip CvM-entropy summary.")
+
+    if run_cvm_div:
+        cvm_div_file = os.path.join(sim_root, "cvm_diversity_results.txt")
+        if os.path.isfile(cvm_div_file):
+            find_best_fit_model_by_cvm_diversity(cvm_div_file)
+        else:
+            print("[INFO] cvm_diversity_results.txt not found; skip CvM-diversity summary.")
+
+    finalize_log(start_time)
+
+def finalize_log(start_time):
     end_time = time.time()
     elapsed_time = end_time - start_time
     timestamp = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime(end_time))
@@ -485,7 +665,8 @@ def main():
     print("\nTIME STAMP")
     print("----------")
     print(f"Date and time: {timestamp}")
-    print(f"Total wall-clock time used: {elapsed_time:.5f} seconds ({int(elapsed_time//3600)}h:{int((elapsed_time%3600)//60)}m:{int(elapsed_time%60)}s)")
+    print(f"Total wall-clock time used: {elapsed_time:.5f} seconds "
+          f"({int(elapsed_time//3600)}h:{int((elapsed_time%3600)//60)}m:{int(elapsed_time%60)}s)")
 
 if __name__ == "__main__":
     main()
