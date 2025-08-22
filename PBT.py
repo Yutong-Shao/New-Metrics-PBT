@@ -4,6 +4,7 @@ import os
 import sys
 import math
 import time
+import argparse
 from collections import Counter
 from concurrent.futures import ProcessPoolExecutor
 from Bio.SeqIO.FastaIO import SimpleFastaParser
@@ -135,75 +136,87 @@ def compute_zscore(original, simulated_list):
     z = -(original - avg) / sd if sd != 0 else float("nan")
     return avg, sd, z
 
-def process_model_folder_entropy(model_path, original_alignment):
-    entropy_vals = []
-    entropy_files = []
+def compute_entropy_for_file(file_path):
+    sequences = read_fasta_dict(file_path)
+    entropy = calc_mean_entropy(sequences)
+    return os.path.basename(file_path), entropy
 
-    for file in os.listdir(model_path):
-        if file.endswith(".fa_gap"):
-            full_path = os.path.join(model_path, file)
-            sequences = read_fasta_dict(full_path)
-            entropy = calc_mean_entropy(sequences)
-            entropy_vals.append(entropy)
-            entropy_files.append(file)
+def compute_diversity_for_file(file_path):
+    sequences = read_fasta_dict(file_path)
+    diversity = calc_mean_diversity(sequences)
+    return os.path.basename(file_path), diversity
 
-    if entropy_vals:
-        avg_e, sd_e, z_e = compute_zscore(calc_mean_entropy(original_alignment), entropy_vals)
+def process_model_folder_entropy_parallel(model_path, original_alignment, cpus=1):
+    fa_gap_files = [
+        os.path.join(model_path, f)
+        for f in os.listdir(model_path)
+        if f.endswith(".fa_gap")
+    ]
+
+    with ProcessPoolExecutor(max_workers=cpus) as executor:
+        results = list(executor.map(compute_entropy_for_file, fa_gap_files))
+
+    if results:
+        orig_entropy = calc_mean_entropy(original_alignment)
+        simulated_entropies = [val for _, val in results]
+        avg_e, sd_e, z_e = compute_zscore(orig_entropy, simulated_entropies)
+
         with open(os.path.join(model_path, "entropy.pbr_gaps"), "w") as f:
             f.write("Test of model adequacy / across sites entropy heterogeneity\n")
-            f.write(f"Entropy (original data): {calc_mean_entropy(original_alignment)}\n")
+            f.write(f"Entropy (original data): {orig_entropy}\n")
             f.write(f"Average entropy (simulated data): {avg_e}\n")
             f.write(f"SD simulated data: {sd_e}\n")
             f.write(f"Z-score: {z_e}\n")
 
         with open(os.path.join(model_path, "entropy_scores_bootstrapped_data.txt_gaps"), "w") as f:
             f.write("file\tentropy\n")
-            for file, val in zip(entropy_files, entropy_vals):
+            for file, val in results:
                 f.write(f"{file}\t{val}\n")
 
-def process_model_folder_diversity(model_path, original_alignment):
-    diversity_vals = []
-    diversity_files = []
+def process_model_folder_diversity_parallel(model_path, original_alignment, cpus=1):
+    fa_gap_files = [
+        os.path.join(model_path, f)
+        for f in os.listdir(model_path)
+        if f.endswith(".fa_gap")
+    ]
 
-    for file in os.listdir(model_path):
-        if file.endswith(".fa_gap"):
-            full_path = os.path.join(model_path, file)
-            sequences = read_fasta_dict(full_path)
-            diversity = calc_mean_diversity(sequences)
-            diversity_vals.append(diversity)
-            diversity_files.append(file)
+    with ProcessPoolExecutor(max_workers=cpus) as executor:
+        results = list(executor.map(compute_diversity_for_file, fa_gap_files))
 
-    if diversity_vals:
-        avg_d, sd_d, z_d = compute_zscore(calc_mean_diversity(original_alignment), diversity_vals)
+    if results:
+        orig_div = calc_mean_diversity(original_alignment)
+        simulated_divs = [val for _, val in results]
+        avg_d, sd_d, z_d = compute_zscore(orig_div, simulated_divs)
+
         with open(os.path.join(model_path, "diversity.pbr_gaps"), "w") as f:
             f.write("Test of model adequacy / across sites compositional heterogeneity\n")
-            f.write(f"Diversity original data: {calc_mean_diversity(original_alignment)}\n")
+            f.write(f"Diversity original data: {orig_div}\n")
             f.write(f"Average diversity simulated data: {avg_d}\n")
             f.write(f"SD simulated data: {sd_d}\n")
             f.write(f"Z-score: {z_d}\n")
 
         with open(os.path.join(model_path, "diversity_scores_bootstrapped_data.txt_gaps"), "w") as f:
             f.write("file\tdiversity\n")
-            for file, val in zip(diversity_files, diversity_vals):
+            for file, val in results:
                 f.write(f"{file}\t{val}\n")
 
-def stage2_entropy_only(sim_root, orig_path):
-    print(f"\n[MEAN ENTROPY PROGRESS] Computing entropy for each model folder...")
+def stage2_entropy_only(sim_root, orig_path, cpus=1):
+    print(f"\n[MEAN ENTROPY PROGRESS] Computing entropy for each model folder using {cpus} CPUs per folder...")
     original_alignment = read_fasta_dict(orig_path)
     model_dirs = [os.path.join(sim_root, d) for d in sorted(os.listdir(sim_root)) if os.path.isdir(os.path.join(sim_root, d))]
 
     for model_dir in model_dirs:
         print(f"Processing model: {os.path.basename(model_dir)}")
-        process_model_folder_entropy(model_dir, original_alignment)
+        process_model_folder_entropy_parallel(model_dir, original_alignment, cpus=cpus)
 
-def stage2_diversity_only(sim_root, orig_path):
-    print(f"\n[MEAN DIVERSITY PROGRESS] Computing diversity for each model folder...")
+def stage2_diversity_only(sim_root, orig_path, cpus=1):
+    print(f"\n[MEAN DIVERSITY PROGRESS] Computing diversity for each model folder using {cpus} CPUs per folder...")
     original_alignment = read_fasta_dict(orig_path)
     model_dirs = [os.path.join(sim_root, d) for d in sorted(os.listdir(sim_root)) if os.path.isdir(os.path.join(sim_root, d))]
 
     for model_dir in model_dirs:
         print(f"Processing model: {os.path.basename(model_dir)}")
-        process_model_folder_diversity(model_dir, original_alignment)
+        process_model_folder_diversity_parallel(model_dir, original_alignment, cpus=cpus)
 
 def summarize_mean_entropy_values(sim_root):
     entropy_summary = []
@@ -287,7 +300,7 @@ def compute_original_sitewise_diversity(sim_root, orig_path):
         for i, v in enumerate(diversity_vals, 1):
             f.write(f"{i}\t{v}\n")
 
-# ---------- Step 3b: Per-site metrics in parallel ----------
+# Per-site Cvm test metrics
 
 def site_diversity(column):
     aas = [aa for aa in column if aa not in {"-", "X", "?"}]
@@ -304,107 +317,137 @@ def site_entropy(column):
         h -= p * math.log2(p)
     return h
 
-def compute_sitewise_diversity(fasta_path):
+def compute_and_save_sitewise_diversity(fasta_path):
     with open(fasta_path, "r") as f:
         seqs = {h: s for h, s in SimpleFastaParser(f)}
     L = len(next(iter(seqs.values())))
     divs = [site_diversity([s[i] for s in seqs.values()]) for i in range(L)]
-    with open(fasta_path + ".sitewise_diversity.txt", "w") as out:
+    out_path = fasta_path + ".sitewise_diversity.txt"
+    with open(out_path, "w") as out:
         out.write("site\tdiversity\n")
         for i, v in enumerate(divs, 1):
             out.write(f"{i}\t{v}\n")
+    return out_path
 
-def compute_sitewise_entropy(fasta_path):
+def compute_and_save_sitewise_entropy(fasta_path):
     with open(fasta_path, "r") as f:
         seqs = {h: s for h, s in SimpleFastaParser(f)}
     L = len(next(iter(seqs.values())))
     ents = [site_entropy([s[i] for s in seqs.values()]) for i in range(L)]
-    with open(fasta_path + ".sitewise_entropy.txt", "w") as out:
+    out_path = fasta_path + ".sitewise_entropy.txt"
+    with open(out_path, "w") as out:
         out.write("site\tentropy\n")
         for i, v in enumerate(ents, 1):
             out.write(f"{i}\t{v:.6f}\n")
+    return out_path
 
-def stage3_compute_sitewise_entropy(sim_root):
-    print("\nComputing per-site entropy for all .fa_gap files...")
+def stage3_compute_sitewise_entropy_parallel(sim_root, cpus=1):
+    print(f"\nComputing per-site entropy for all .fa_gap files using {cpus} CPUs...")
+
+    from concurrent.futures import ProcessPoolExecutor
+
+    tasks = []
     for model in sorted(os.listdir(sim_root)):
         mp = os.path.join(sim_root, model)
         if not os.path.isdir(mp):
             continue
         for fn in sorted(os.listdir(mp)):
             if fn.endswith(".fa_gap"):
-                path = os.path.join(mp, fn)
-                compute_sitewise_entropy(path)
+                tasks.append(os.path.join(mp, fn))
 
-def stage3_compute_sitewise_diversity(sim_root):
-    print("\nComputing per-site diversity for all .fa_gap files...")
+    with ProcessPoolExecutor(max_workers=cpus) as executor:
+        list(executor.map(compute_and_save_sitewise_entropy, tasks))
+
+def stage3_compute_sitewise_diversity_parallel(sim_root, cpus=1):
+    print(f"\nComputing per-site diversity for all .fa_gap files using {cpus} CPUs...")
+
+    from concurrent.futures import ProcessPoolExecutor
+
+    tasks = []
     for model in sorted(os.listdir(sim_root)):
         mp = os.path.join(sim_root, model)
         if not os.path.isdir(mp):
             continue
         for fn in sorted(os.listdir(mp)):
             if fn.endswith(".fa_gap"):
-                path = os.path.join(mp, fn)
-                compute_sitewise_diversity(path)
+                tasks.append(os.path.join(mp, fn))
 
-def cvm_test_entropy_per_model(sim_root):
-    print("\nRunning CvM test comparing model sitewise metrics to original")
+    with ProcessPoolExecutor(max_workers=cpus) as executor:
+        list(executor.map(compute_and_save_sitewise_diversity, tasks))
 
-    # Load original sitewise entropy
+def single_cvm_entropy_test(file_path, orig_ent):
+    model = os.path.basename(os.path.dirname(file_path))
+    df = pd.read_csv(file_path, sep='\t')
+    seq_vals = df["entropy"].values
+    result = cramervonmises_2samp(seq_vals, orig_ent)
+    return model, os.path.basename(file_path), result.statistic, result.pvalue
+
+def single_cvm_diversity_test(file_path, orig_div):
+    model = os.path.basename(os.path.dirname(file_path))
+    df = pd.read_csv(file_path, sep='\t')
+    seq_vals = df["diversity"].values
+    result = cramervonmises_2samp(seq_vals, orig_div)
+    return model, os.path.basename(file_path), result.statistic, result.pvalue
+
+def cvm_test_entropy_per_model_parallel(sim_root, cpus=1):
+    print(f"\nRunning CvM test for all sitewise entropy files using {cpus} CPUs...")
+
     orig_ent_path = os.path.join(sim_root, "original.sitewise_entropy.txt")
     if not os.path.isfile(orig_ent_path):
         print(f"[ERROR] Missing original sitewise entropy: {orig_ent_path}")
         return
     orig_ent = pd.read_csv(orig_ent_path, sep='\t')["entropy"].values
 
-    entropy_results = []
-
+    all_sitewise_files = []
     for model in sorted(os.listdir(sim_root)):
         model_path = os.path.join(sim_root, model)
         if not os.path.isdir(model_path):
             continue
-
         for file in sorted(os.listdir(model_path)):
             if file.endswith(".fa_gap.sitewise_entropy.txt"):
-                df = pd.read_csv(os.path.join(model_path, file), sep='\t')
-                seq_vals = df["entropy"].values
-                result = cramervonmises_2samp(seq_vals, orig_ent)
-                entropy_results.append((model, file, result.statistic, result.pvalue))
+                all_sitewise_files.append(os.path.join(model_path, file))
+
+    from functools import partial
+    from concurrent.futures import ProcessPoolExecutor
+
+    with ProcessPoolExecutor(max_workers=cpus) as executor:
+        results = list(executor.map(partial(single_cvm_entropy_test, orig_ent=orig_ent), all_sitewise_files))
 
     out_path = os.path.join(sim_root, "cvm_entropy_results.txt")
     with open(out_path, "w") as f:
         f.write("model\tfile\tW2_statistic\tp_value\n")
-        for m, f_, s, p in entropy_results:
+        for m, f_, s, p in results:
             f.write(f"{m}\t{f_}\t{s:.6e}\t{p:.6e}\n")
     print(f"Entropy CvM results written to {out_path}")
 
-def cvm_test_diversity_per_model(sim_root):
-    print("\nRunning CvM test comparing model sitewise metrics to original")
+def cvm_test_diversity_per_model_parallel(sim_root, cpus=1):
+    print(f"\nRunning CvM test for all sitewise diversity files using {cpus} CPUs...")
 
-    # Load original sitewise diversity
     orig_div_path = os.path.join(sim_root, "original.sitewise_diversity.txt")
     if not os.path.isfile(orig_div_path):
         print(f"[ERROR] Missing original sitewise diversity: {orig_div_path}")
         return
     orig_div = pd.read_csv(orig_div_path, sep='\t')["diversity"].values
 
-    diversity_results = []
-
+    all_sitewise_files = []
     for model in sorted(os.listdir(sim_root)):
         model_path = os.path.join(sim_root, model)
         if not os.path.isdir(model_path):
             continue
-
         for file in sorted(os.listdir(model_path)):
             if file.endswith(".fa_gap.sitewise_diversity.txt"):
-                df = pd.read_csv(os.path.join(model_path, file), sep='\t')
-                seq_vals = df["diversity"].values
-                result = cramervonmises_2samp(seq_vals, orig_div)
-                diversity_results.append((model, file, result.statistic, result.pvalue))
+                all_sitewise_files.append(os.path.join(model_path, file))
+
+    from functools import partial
+    from concurrent.futures import ProcessPoolExecutor
+
+    with ProcessPoolExecutor(max_workers=cpus) as executor:
+        results = list(executor.map(partial(single_cvm_diversity_test, orig_div=orig_div), all_sitewise_files))
 
     out_path = os.path.join(sim_root, "cvm_diversity_results.txt")
     with open(out_path, "w") as f:
         f.write("model\tfile\tW2_statistic\tp_value\n")
-        for m, f_, s, p in diversity_results:
+        for m, f_, s, p in results:
             f.write(f"{m}\t{f_}\t{s:.6e}\t{p:.6e}\n")
     print(f"Diversity CvM results written to {out_path}")
 
@@ -537,18 +580,26 @@ def find_best_fit_model_by_cvm_diversity(file_path):
 # Main
 
 def main():
-    if len(sys.argv) < 3:
-        print("Usage: python PBT.py <SimRootFolder> <OriginalAlignment> [options]")
-        print("Options (can be combined; none = run ALL):")
-        print("  -mdiv     : run mean-diversity pipeline after stage1")
-        print("  -ment     : run mean-entropy pipeline after stage1")
-        print("  -cvmdiv   : run CvM-diversity pipeline after stage1")
-        print("  -cvment   : run CvM-entropy pipeline after stage1")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Parametric Bootstrap Test (PBT)")
+    parser.add_argument("sim_root", help="Simulation root folder")
+    parser.add_argument("orig_path", help="Original alignment file")
+    parser.add_argument("-mdiv", action="store_true", help="Run mean-diversity pipeline")
+    parser.add_argument("-ment", action="store_true", help="Run mean-entropy pipeline")
+    parser.add_argument("-cvmdiv", action="store_true", help="Run CvM-diversity pipeline")
+    parser.add_argument("-cvment", action="store_true", help="Run CvM-entropy pipeline")
+    parser.add_argument("-T", "--threads", type=int, default=1, help="Number of CPUs to use per model (default: 1)")
 
-    sim_root = sys.argv[1]
-    orig_path = sys.argv[2]
-    flags = set(a.lower() for a in sys.argv[3:])
+    args = parser.parse_args()
+
+    sim_root = args.sim_root
+    orig_path = args.orig_path
+    cpus = args.threads
+
+    flags = set()
+    if args.mdiv: flags.add("-mdiv")
+    if args.ment: flags.add("-ment")
+    if args.cvmdiv: flags.add("-cvmdiv")
+    if args.cvment: flags.add("-cvment")
 
     allowed_flags = {"-mdiv", "-ment", "-cvmdiv", "-cvment"}
     unknown = [f for f in flags if f not in allowed_flags]
@@ -596,13 +647,13 @@ def main():
     # Mean-Entropy
     if run_mean_ent:
         print("\n[MODE] Mean-Entropy")
-        stage2_entropy_only(sim_root, orig_path)
+        stage2_entropy_only(sim_root, orig_path, cpus=cpus)
         summarize_mean_entropy_values(sim_root)
 
     # Mean-Diversity
     if run_mean_div:
         print("\n[MODE] Mean-Diversity")
-        stage2_diversity_only(sim_root, orig_path)
+        stage2_diversity_only(sim_root, orig_path, cpus=cpus)
         summarize_mean_diversity_values(sim_root)
 
     # CvM-Entropy
@@ -611,8 +662,8 @@ def main():
         ent_ref = os.path.join(sim_root, "original.sitewise_entropy.txt")
         if not os.path.isfile(ent_ref):
             compute_original_sitewise_entropy(sim_root, orig_path)
-        stage3_compute_sitewise_entropy(sim_root)
-        cvm_test_entropy_per_model(sim_root)
+        stage3_compute_sitewise_entropy_parallel(sim_root, cpus=cpus)
+        cvm_test_entropy_per_model_parallel(sim_root, cpus=cpus)
 
     # CvM-Diversity
     if run_cvm_div:
@@ -620,8 +671,8 @@ def main():
         div_ref = os.path.join(sim_root, "original.sitewise_diversity.txt")
         if not os.path.isfile(div_ref):
             compute_original_sitewise_diversity(sim_root, orig_path)
-        stage3_compute_sitewise_diversity(sim_root)
-        cvm_test_diversity_per_model(sim_root)
+        stage3_compute_sitewise_diversity_parallel(sim_root, cpus=cpus)
+        cvm_test_diversity_per_model_parallel(sim_root, cpus=cpus)
 
     print("\n[REPORT] CONSOLIDATED BEST-FIT SUMMARIES")
 
