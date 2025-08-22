@@ -113,9 +113,25 @@ To start the parametric bootstrap test, please make sure your input folder is st
 After completing the simulation of datasets, run the following command to perform model evaluation:
 
 ```
-python PBT.py <SimRootFolder> <OriginalAlignment> [NumCPUs]
+python PBT.py <SimRootFolder> <OriginalAlignment>  [options]
 ```
-- Here, `SimRootFolder` is the path to the folder containing simulated datasets for n models, and `OriginalAlignment` is the path to the original empirical dataset.
+- `SimRootFolder`: the path to the folder containing simulated datasets for n models.
+
+- `OriginalAlignment`: the path to the original empirical dataset.
+
+- `[options]`: optional flags to control which metrics are computed and the number of CPUs to use.
+
+   Available options:
+
+- `-mdiv` : run mean-diversity pipeline
+
+- `-ment` : run mean-entropy pipeline
+
+- `-cvmdiv` : run CvM-diversity pipeline
+
+- `-cvment` : run CvM-entropy pipeline
+
+- `-T N`: number of CPUs to use per model (default: 1)
 
 The output folder structure after running PBT.py is as follows:
 
